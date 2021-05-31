@@ -15,3 +15,6 @@ Apps/Clientes/__pycache__/
 Apps/Recepcion/migrations/__pycache__/
 Apps/Recepcion/migrations/
 Apps/Recepcion/__pycache__/
+Apps/Comunes/migrations/__pycache__/
+Apps/Comunes/migrations/
+Apps/Comunes/__pycache__/
