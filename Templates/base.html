@@ -86,6 +86,21 @@
     </div>
 </div>
 
+  <!-- Toast notification -->
+
+<div class="toast toast toast-bootstrap hide" role="alert" aria-live="assertive" aria-atomic="true" style="position: absolute; top:20px; right:20px">
+    <div class="toast-header">
+        <i class="fa fa-square text-navy"> </i>
+        <strong class="mr-auto m-l-sm">Notificación</strong>
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="toast-body">
+        Bienvenido al <strong>Sistema de Información</strong> - de Energía Segura.
+    </div>
+</div>
+
 <!-- Mainly scripts -->
 <script src="{% static 'js/jquery-3.1.1.min.js"></script>
 <script src="{% static 'js/popper.min.js"></script>
@@ -105,6 +120,27 @@
 
 <!-- Toastr -->
 <script src="{% static 'js/plugins/toastr/toastr.min.js' %}"></script>
+
+
+<script type="text/javascript">
+    {% for msg in messages %}
+        $(document).ready(function(){
+            setTimeout(function() {
+                toastr.options = {
+                    "closeButton": true,
+                    "progressBar": true,
+                    "showEasing": "swing"
+                }
+                toastr["{{ msg.tags }}"]("{{msg}}")
+            },500);
+        });
+    {% endfor %}
+
+    //inhabilita el autocompletar de los formularios
+     $('form').attr('autocomplete','off');
+</script>
+{% block scripts %}
+{% endblock%}
 
 </body>
 
