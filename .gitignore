@@ -1,5 +1,6 @@
 db.sqlite3
 EnergiaSegura2/__pycache__/
+Apps/__pycache__/
 Apps/Usuarios/migrations/__pycache__/
 Apps/Usuarios/migrations/
 Apps/Usuarios/__pycache__/
