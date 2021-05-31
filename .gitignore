@@ -1,0 +1,17 @@
+db.sqlite3
+SistemaInformacion/__pycache__/
+Apps/Usuarios/migrations/__pycache__/
+Apps/Usuarios/migrations/
+Apps/Usuarios/__pycache__/
+Apps/ObjEnsayo/migrations/__pycache__/
+Apps/ObjEnsayo/migrations/
+Apps/ObjEnsayo/__pycache__/
+Apps/AnalisisLaboratorio/migrations/__pycache__/
+Apps/AnalisisLaboratorio/migrations/
+Apps/AnalisisLaboratorio/__pycache__/
+Apps/Clientes/migrations/__pycache__/
+Apps/Clientes/migrations/
+Apps/Clientes/__pycache__/
+Apps/Recepcion/migrations/__pycache__/
+Apps/Recepcion/migrations/
+Apps/Recepcion/__pycache__/
