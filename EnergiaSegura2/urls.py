@@ -16,5 +16,8 @@ Including another URLconf
 from django.urls import path, include
 
 urlpatterns = [
-    path ('objensayo/', include('Apps.ObjEnsayo.urls'))
+    path ('objensayo/', include('Apps.ObjEnsayo.urls')),
+    path ('analisis/', include('Apps.Analisis.urls')),
+    
+    path('select2/', include('django_select2.urls'))
 ]

@@ -31,12 +31,27 @@ class Fases (models.Model):
     def __str__(self):
         return self.nombre
 
+tiposIVA = (
+    ('Gravado', 'Gravado'),
+    ('Exento', 'Exento'),
+    ('Excluido', 'Excluido'),
+    ('AIU Gravado', 'AIU Gravado'),
+    ('AIU No Gravado', 'AIU No Gravado'),
+    ('No Gravados', 'No Gravados')
+)
+
 class Analisis (models.Model):
     nombre = models.CharField(
-        max_length=50,
+        max_length=100,
         null=False,
         unique=True,
         verbose_name='Nombre'
+    )
+    sigia = models.CharField(
+        max_length=100,
+        null=False,
+        unique=True,
+        verbose_name='Sigia'
     )
     estado = models.ForeignKey(
         Estado,
@@ -65,6 +80,24 @@ class Analisis (models.Model):
         limit_choices_to={'estado': 1},
         on_delete=models.CASCADE,
         verbose_name="Fase"
+    )
+    iva = models.DecimalField(
+        max_digits=3,
+        decimal_places=2,
+        verbose_name= 'IVA',
+        null = False
+    )
+    tipoIva = models.CharField (
+        max_length=20,
+        choices=tiposIVA,
+        null=False,
+        verbose_name='Tipo de iva'
+    )
+    precio = models.DecimalField (
+        max_digits=10,
+        decimal_places=2,
+        verbose_name='Precio de venta',
+        null=False
     )
 
     class Meta:
