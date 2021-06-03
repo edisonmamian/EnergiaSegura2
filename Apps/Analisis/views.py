@@ -26,6 +26,20 @@ class CrearFase (CreateView):
 
         return context
 
+    def form_valid (self, form):
+        messages.success (
+            self.request,
+            "Se ha registrado exitosamente la fase"
+        )
+        return super(CrearFase, self).form_valid(form)
+
+    def form_invalid (self, form):
+        messages.error (
+            self.request,
+            "Error al registrar la fase, por favor revise los datos"
+        )
+        return super(CrearFase, self).form_invalid(form)
+
 class ActualizarFase (UpdateView):
     model = Fases
     form_class = FormFases
@@ -47,15 +61,29 @@ class ActualizarFase (UpdateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['crear'] = True
+        kwargs['crear'] = False
         return kwargs
 
     def get_context_data(self, **kwargs):
         context = super(ActualizarFase, self).get_context_data(**kwargs)
-        context['boton']= "Registrar"
+        context['boton']= "Actualizar"
         context['tipos']= Fases.objects.all()
 
         return context
+
+    def form_valid (self, form):
+        messages.success (
+            self.request,
+            "Se ha actualizado exitosamente la fase"
+        )
+        return super(ActualizarFase, self).form_valid(form)
+
+    def form_invalid (self, form):
+        messages.error (
+            self.request,
+            "Error al actualizar la fase, por favor revise los datos"
+        )
+        return super(ActualizarFase, self).form_invalid(form)
 
 ################## Analisis 
 

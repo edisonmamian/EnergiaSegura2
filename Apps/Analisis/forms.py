@@ -60,7 +60,10 @@ class FormAnalisis (forms.ModelForm):
             'unidad_medida',
             'valor_minimo',
             'valor_maximo',
-            'fase'
+            'fase',
+            'iva',
+            'tipoIva',
+            'precio'
         ]
 
     def __init__(self, *args, **kwargs):

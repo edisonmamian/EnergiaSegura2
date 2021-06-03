@@ -2,13 +2,13 @@
 {% load static %}
 
 {% block titulo %}
-    {{ boton }}
+  {{ boton }} análisis de laboratorio
 {% endblock %}
 
 {% block extrahead %}
-    <link href="{% static 'css/plugins/select2/select2.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/plugins/select2/select2-bootstrap4.min.css' %}" rel="stylesheet">
-{% endblock %}
+  <link href="{% static 'css/plugins/select2/select2.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/plugins/select2/select2-bootstrap4.min.css' %}" rel="stylesheet">
+{% endblock%}
 
 {% block contenido %}
     <div class="col-lg-6">
@@ -18,23 +18,67 @@
             <div class="row">
                 <div class="fieldWrapper col-lg-6">
                     {{ form.nombre.errors }}
-                    <label for="{{ form.nombre.id_for_label }}">Análisis: </label>
+                    <label for="{{ form.nombre.id_for_label }}">{{ form.nombre.label }}: </label>
                     {{ form.nombre }}
                 </div>
 
                 <div class="fieldWrapper col-lg-6">
-                    {{ form.estado.errors }}
-                    <label for="{{ form.estado.id_for_label }}">Estado: </label>
-                    {{ form.estado }}
+                    {{ form.sigia.errors }}
+                    <label for="{{ form.sigia.id_for_label }}">{{ form.sigia.label }}: </label>
+                    {{ form.sigia }}
                 </div>
             </div>
 
             <div class="row">                
                 <div class="fieldWrapper col-lg-6">
-                    {{ form.fases_previas.errors }}
-                    <label for="{{ form.fases_previas.id_for_label }}">Fases previas: </label>
-                    {{ form.fases_previas }}
-                </div>              
+                    {{ form.estado.errors }}
+                    <label for="{{ form.estado.id_for_label }}">{{ form.estado.label }}: </label>
+                    {{ form.estado }}
+                </div>  
+                <div class="fieldWrapper col-lg-6">
+                    {{ form.unidad_medida.errors }}
+                    <label for="{{ form.unidad_medida.id_for_label }}">{{ form.unidad_medida.label }}: </label>
+                    {{ form.unidad_medida }}
+                </div>             
+            </div>
+
+            <div class="row">                
+                <div class="fieldWrapper col-lg-6">
+                    {{ form.valor_minimo.errors }}
+                    <label for="{{ form.valor_minimo.id_for_label }}">{{ form.valor_minimo.label }}: </label>
+                    {{ form.valor_minimo }}
+                </div>  
+                <div class="fieldWrapper col-lg-6">
+                    {{ form.valor_maximo.errors }}
+                    <label for="{{ form.valor_maximo.id_for_label }}">{{ form.valor_maximo.label }}: </label>
+                    {{ form.valor_maximo }}
+                </div>             
+            </div>
+
+            <div class="row">                
+                <div class="fieldWrapper col-lg-6">
+                    {{ form.fase.errors }}
+                    <label for="{{ form.fase.id_for_label }}">{{ form.fase.label }}: </label>
+                    {{ form.fase }}
+                </div>  
+                <div class="fieldWrapper col-lg-6">
+                    {{ form.precio.errors }}
+                    <label for="{{ form.unidad_medida.id_for_label }}">{{ form.precio.label }}: </label>
+                    {{ form.precio }}
+                </div>             
+            </div>
+
+            <div class="row">                
+                <div class="fieldWrapper col-lg-6">
+                    {{ form.iva.errors }}
+                    <label for="{{ form.iva.id_for_label }}">{{ form.iva.label }}: </label>
+                    {{ form.iva }}
+                </div>  
+                <div class="fieldWrapper col-lg-6">
+                    {{ form.tipoIva.errors }}
+                    <label for="{{ form.tipoIva.id_for_label }}">{{ form.tipoIva.label }}: </label>
+                    {{ form.tipoIva }}
+                </div>             
             </div>
 
             <div class="form-group">
@@ -50,7 +94,7 @@
     <div class="col-lg-6 ">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5>Listado de fases</h5>
+                <h5>Listado de análisis</h5>
                 <div class="ibox-tools">
                     <a class="collapse-link">
                         <i class="fa fa-chevron-up"></i>
@@ -62,13 +106,14 @@
             </div>
             <div class="ibox-content">
                 <div class="row">
-  
+
                     <input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Buscar en la tabla">
-  
+
                     <table class="footable table table-stripped" data-page-size="8" data-filter=#filter>
                         <thead>
                             <tr>
                                 <th>Nombre</th>
+                                <th>Fase</th>
                                 <th>Estado</th>
                                 <th>Acción</th>
                             </tr>
@@ -80,10 +125,13 @@
                                         {{ tipo.nombre }}
                                     </td>
                                     <td>
+                                        {{ tipo.fase }}
+                                    </td>
+                                    <td>
                                         {{ tipo.estado }}
                                     </td>
                                     <td>
-                                        <a href="{% url 'Analisis:editar_fase' tipo.id %}" class="btn btn-primary"> Editar </a>
+                                        <a href="{% url 'Analisis:editar' tipo.id %}" class="btn btn-primary"> Editar </a>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -98,7 +146,7 @@
                     </table>
                 </div>
             </div>
-  
+
         </div>
     </div>
 {% endblock %}
