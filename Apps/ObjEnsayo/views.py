@@ -23,7 +23,41 @@ class CrearObjEnsayo (CreateView):
         context['boton']= "Registrar"
         context['tipos']= TiposObjEnsayo.objects.all()
 
+        if self.request.POST:
+            context['analisis'] = FormSet_ObjEnsayo_Analisis (
+                self.request.POST
+            )
+        else:
+            context['analisis'] = FormSet_ObjEnsayo_Analisis ()
+
         return context
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        analisis = context['analisis']
+
+        if analisis.is_valid():
+            self.object = form.save()
+            analisis.instance = self.object
+            analisis.save()
+        else:
+            messages.error (
+                self.request,
+                "Error al registrar el objeto de ensayo, por favor revise los datos"
+            )
+            return super(CrearObjEnsayo, self).form_invalid(form)
+        messages.success(
+            self.request,
+            "Se ha registrado exitosamente el objeto de ensayo"
+        )
+        return super(CrearObjEnsayo, self).form_valid(form)
+    
+    def form_invalid(self, form):
+        messages.error(
+            self.request,
+            "Error al registrar el objeto de ensayo, por favor revise los datos"
+        )
+        return super(CrearObjEnsayo, self).form_invalid(form)
 
 class ActualizarObjEnsayo (UpdateView):
     model = TiposObjEnsayo
@@ -48,6 +82,16 @@ class ActualizarObjEnsayo (UpdateView):
         context = super(ActualizarObjEnsayo, self).get_context_data(**kwargs)
         context['boton']= "Actualizar"
         context['tipos']= TiposObjEnsayo.objects.all()
+
+        if self.request.POST:
+            context['analisis'] = FormSet_ObjEnsayo_Analisis (
+                self.request.POST,
+                instance=self.object
+            )
+        else:
+            context['analisis'] = FormSet_ObjEnsayo_Analisis (
+                instance=self.object
+            )
 
         return context
 
