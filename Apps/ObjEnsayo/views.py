@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.views.generic import CreateView, ListView, UpdateView, DetailView
+from django.views.generic import CreateView, UpdateView
 from django.contrib import messages
 from .models import *
 from .forms import *
@@ -34,7 +34,6 @@ class ActualizarObjEnsayo (UpdateView):
         return reverse("ObjEnsayo:crear")
 
     def dispatch(self, request, *args, **kwargs):
-        #print (self)
         try:
             TiposObjEnsayo.objects.get(id = self.kwargs['pk'])
         except TiposObjEnsayo.DoesNotExist:
