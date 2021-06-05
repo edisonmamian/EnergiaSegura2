@@ -29,6 +29,13 @@ class ClasificacionClientes (models.Model):
         return self.nombre
 
 # modelo para los clientes de Energia Segura
+CONTRIBUYENTE = (
+    ('Persona Natural Regimen Simplificado', 'Persona Natural Regimen Simplificado'),
+    ('Persona Natural Regimen Comun', 'Persona Natural Regimen Comun'),
+    ('Grande Contribuyente Autorretenedor', 'Grande Contribuyente Autorretenedor'),
+    ('Grande Contribuyente No Autorretenedor', 'Grande Contribuyente No Autorretenedor'),
+    ('Persona Juridica', 'Persona Juridica'),
+)
 class Clientes (models.Model):
     # almacena el nombre
     nombre = models.CharField(
@@ -45,6 +52,7 @@ class Clientes (models.Model):
     tipo_identifcacion = models.ForeignKey(
         TipoIdentificacion,
         on_delete=models.CASCADE,
+        limit_choices_to={'estado': 1},
         verbose_name='Tipo de identificación'
     )
     # el número de identificación del cliente
@@ -59,17 +67,68 @@ class Clientes (models.Model):
         verbose_name = 'Clasificación del cliente',
         limit_choices_to = {'estado': 1}
     )
-    # departamento de Colombia dónde está ubicado
+    contribuyente = models.ForeignKey(
+        TipoContribuyente,
+        on_delete=models.CASCADE,
+        limit_choices_to={'estado': 1},
+        verbose_name= 'Tipo de contribuyente'
+    )
+    plazo = models.IntegerField(
+        verbose_name='Plazo para pagos'
+    )
+    actividadEconomica = models.ForeignKey (
+        ActividadEconomica,
+        on_delete=models.CASCADE,
+        limit_choices_to={'estado': 1},
+        verbose_name= 'Actividad Económica'
+    )
+    tiposResponsabilidades = models.ManyToManyField(
+        TiposResponsabilidades,
+        limit_choices_to={'estado': 1},
+    )
+
+    def __str__(self):
+        return self.nombre
+
+    class Meta:
+        unique_together = [['tipo_identifcacion', 'numero_identificacion']]
+
+# Modelo de sedes de los clientes
+class SedeCliente (models.Model):
+    # nombre de la sede
+    nombre = models.CharField(
+        max_length=50,
+        null=False,
+        verbose_name='Nombre de la sede'
+    )
+    estado = models.ForeignKey(
+        Estado,
+        on_delete=models.CASCADE,
+        verbose_name="Estado"
+    )
+    # departamento en la que está ubicada la sede
     departamento = models.ForeignKey(
         Departamentos,
         on_delete=models.CASCADE,
         verbose_name = 'Departamento'
     )
-    # ciudad de Colombia dónde está ubicado
+    # ciudad en la que está ubicada la sede
     ciudad = models.ForeignKey(
         Ciudades,
         on_delete=models.CASCADE,
         verbose_name='Ciudad'
+    )
+    # dirección de la sede
+    direccion = models.CharField(
+        max_length = 50,
+        null = False,
+        verbose_name = 'Dirección'
+    )
+    # cliente al que pertenece la sede
+    cliente = models.ForeignKey(
+        Clientes,
+        on_delete=models.CASCADE,
+        verbose_name='Cliente'
     )
     # dirección dónde está ublicado
     direccion = models.CharField(
@@ -157,47 +216,9 @@ class Clientes (models.Model):
         null = True,
         blank = True
     )
-
-    def __str__(self):
-        return self.nombre
-
-# Modelo de sedes de los clientes
-class SedeCliente (models.Model):
-    # nombre de la sede
-    nombre = models.CharField(
-        max_length=50,
-        null=False,
-        verbose_name='Nombre o razón social'
-    )
-    estado = models.ForeignKey(
-        Estado,
-        on_delete=models.CASCADE,
-        verbose_name="Estado"
-    )
-    # departamento en la que está ubicada la sede
-    departamento = models.ForeignKey(
-        Departamentos,
-        on_delete=models.CASCADE,
-        verbose_name = 'Departamento'
-    )
-    # ciudad en la que está ubicada la sede
-    ciudad = models.ForeignKey(
-        Ciudades,
-        on_delete=models.CASCADE,
-        verbose_name='Ciudad'
-    )
-    # dirección de la sede
-    direccion = models.CharField(
-        max_length = 50,
-        null = False,
-        verbose_name = 'Dirección'
-    )
-    # cliente al que pertenece la sede
-    cliente = models.ForeignKey(
-        Clientes,
-        on_delete=models.CASCADE,
-        verbose_name='Cliente'
+    fecha_creacion = models.DateField(
+        auto_now_add=True
     )
 
     def __str__(self):
-        return self.nombre
+        return "%s - %s" %(self.cliente.nombre, self.nombre)

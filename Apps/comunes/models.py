@@ -21,7 +21,6 @@ class TipoIdentificacion (models.Model):
     )
     estado = models.ForeignKey (
         Estado,
-        limit_choices_to={'id': 1},
         on_delete=models.CASCADE,
         verbose_name='Estado'
     )
@@ -68,3 +67,61 @@ class Ciudades (models.Model):
 
     def __str__(self):
         return self.nombre
+
+class ClasificacionDian (models.Model):
+    nombre = models.CharField(
+        max_length = 50,
+        null = False,
+        verbose_name = 'Clasificación DIAN'
+    )
+    estado = models.ForeignKey (
+        Estado,
+        on_delete=models.CASCADE,
+        verbose_name='Estado'
+    )
+
+class TipoContribuyente (models.Model):
+    nombre = models.CharField(
+        max_length = 50,
+        null = False,
+        verbose_name = 'Clasificación DIAN'
+    )
+    estado = models.ForeignKey (
+        Estado,
+        on_delete=models.CASCADE,
+        verbose_name='Estado'
+    )
+
+class ActividadEconomica (models.Model):
+    nombre = models.CharField(
+        max_length= 50,
+        null = False,
+        verbose_name='Actividad económica'
+    )
+    codigo = models.CharField(
+        max_length=50,
+        null=False,
+        verbose_name='Código de la actividad económica'
+    )
+    estado = models.ForeignKey (
+        Estado,
+        on_delete=models.CASCADE,
+        verbose_name='Estado'
+    )
+
+class TiposResponsabilidades (models.Model):
+    nombre = models.CharField(
+        max_length= 50,
+        null = False,
+        verbose_name='Actividad económica'
+    )
+    codigo = models.CharField(
+        max_length=50,
+        null=False,
+        verbose_name='Código de la actividad económica'
+    )
+    estado = models.ForeignKey (
+        Estado,
+        on_delete=models.CASCADE,
+        verbose_name='Estado'
+    )
