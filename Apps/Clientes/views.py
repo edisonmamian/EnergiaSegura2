@@ -1,4 +1,3 @@
-from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import CreateView, UpdateView
 from django.contrib import messages

@@ -1,3 +1,30 @@
+
+<!-- inicio comunes -->
+<li>
+  <a href="#">
+    <i class="fa fa-cog"></i>
+    <span class="nav-label">Configuración</span>
+    <span class="fa arrow"></span>
+  </a>
+  
+  <ul class="nav nav-second-level collapse">
+      <li><a href="{% url 'comunes:crear_tipoIdentificacion' %}"> Tipos de identificación </a></li>
+  </ul>
+  <ul class="nav nav-second-level collapse">
+    <li><a href="{% url 'comunes:crear_clasificaciondian' %}"> Clasificación DIAN </a></li>
+  </ul>
+  <ul class="nav nav-second-level collapse">
+    <li><a href="{% url 'comunes:crear_tipocontribuyente' %}"> Tipo de contribuyente </a></li>
+  </ul>
+  <ul class="nav nav-second-level collapse">
+    <li><a href="{% url 'comunes:crear_actividadeconomica' %}"> Actividad económica </a></li>
+  </ul>
+  <ul class="nav nav-second-level collapse">
+    <li><a href="{% url 'comunes:crear_responsabilidadfiscal' %}"> Responsabilidad fiscal </a></li>
+  </ul>
+</li>
+
+<!-- Fin comunes -->
 <!-- inicio Tipos de Cilindros -->
 <li>
     <a href="{% url 'ObjEnsayo:crear' %}">

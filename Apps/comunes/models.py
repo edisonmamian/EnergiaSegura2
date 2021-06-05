@@ -113,12 +113,12 @@ class TiposResponsabilidades (models.Model):
     nombre = models.CharField(
         max_length= 50,
         null = False,
-        verbose_name='Actividad económica'
+        verbose_name='Responsabilidad'
     )
     codigo = models.CharField(
         max_length=50,
         null=False,
-        verbose_name='Código de la actividad económica'
+        verbose_name='Código de responsabilidades'
     )
     estado = models.ForeignKey (
         Estado,
