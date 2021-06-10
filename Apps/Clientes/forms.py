@@ -61,11 +61,23 @@ class FormCliente (forms.ModelForm):
             'estado',
             'tipo_identifcacion',
             'numero_identificacion',
-            'clasificacion'
+            'clasificacion',
+            'contribuyente',
+            'plazo',
+            'actividadEconomica',
+            'tiposResponsabilidades'
         ]
         widgets = {
             'clasificacion' : ModelSelect2MultipleWidget (
                 model = TiposObjEnsayo,
+                search_fields = ['nombre__icontains'],
+                attrs = {
+					'class': 'select2_demo_2 form-control',
+                    'multiple': 'multiple'
+				}
+            ),
+            'tiposResponsabilidades' : ModelSelect2MultipleWidget (
+                model = TiposResponsabilidades,
                 search_fields = ['nombre__icontains'],
                 attrs = {
 					'class': 'select2_demo_2 form-control',
@@ -87,6 +99,15 @@ class FormCliente (forms.ModelForm):
             'class': 'form-control'
         }
         self.fields['numero_identificacion'].widget.attrs = {
+            'class': 'form-control'
+        }
+        self.fields['contribuyente'].widget.attrs = {
+            'class': 'form-control'
+        }
+        self.fields['plazo'].widget.attrs = {
+            'class': 'form-control'
+        }
+        self.fields['actividadEconomica'].widget.attrs = {
             'class': 'form-control'
         }
 
@@ -111,3 +132,6 @@ class FormCliente (forms.ModelForm):
                 )
             except Clientes.DoesNotExist:
                 pass
+
+        if form_data['plazo'] < 0:
+            self._errors['plazo'] = ['El plazo de pago no puede se inferior a cero días']

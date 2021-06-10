@@ -1,5 +1,5 @@
 from django.urls import reverse
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, ListView
 from django.contrib import messages
 from .models import *
 from .forms import *
@@ -77,8 +77,8 @@ class ActualizarClasificacion (UpdateView):
 
 class CrearClientes (CreateView):
     model = Clientes
-    form_class = FormClasificacion
-    template_name = 'Clientes/clasificacion.html'
+    form_class = FormCliente
+    template_name = 'Clientes/clientes.html'
 
     def get_success_url(self):
         return reverse("Clientes:crear_clasificacion")
@@ -110,8 +110,8 @@ class CrearClientes (CreateView):
 
 class ActualizarClientes (UpdateView):
     model = Clientes
-    form_class = FormClasificacion
-    template_name = 'Clientes/clasificacion.html'
+    form_class = FormCliente
+    template_name = 'Clientes/clientes.html'
 
     def get_success_url(self):
         return reverse("Clientes:crear_clasificacion")
@@ -140,3 +140,7 @@ class ActualizarClientes (UpdateView):
             "Error al actualizar el cliente, por favor revise los datos"
         )
         return super(ActualizarClientes, self).form_invalid(form)
+
+class ListarClients (ListView):
+    model = Clientes
+    template_name = 'Clientes/listarClientes.html'

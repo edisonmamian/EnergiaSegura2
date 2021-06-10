@@ -85,6 +85,7 @@ class Clientes (models.Model):
     tiposResponsabilidades = models.ManyToManyField(
         TiposResponsabilidades,
         limit_choices_to={'estado': 1},
+        verbose_name='Tipo de responsabilidad económica'
     )
 
     def __str__(self):
