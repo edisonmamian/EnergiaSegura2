@@ -21,10 +21,12 @@ class TipoIdentificacion (models.Model):
     )
     estado = models.ForeignKey (
         Estado,
-        limit_choices_to={'id': 1},
         on_delete=models.CASCADE,
         verbose_name='Estado'
     )
+
+    def __str__(self):
+        return self.nombre
 
 class Departamentos (models.Model):
     #Almacena el nombre del departamento
@@ -45,6 +47,9 @@ class Departamentos (models.Model):
     def __str__(self):
         return self.nombre
 
+    class Meta:
+        ordering = ['id']
+
 #modelo para las ciudades de Colombia
 class Ciudades (models.Model):
     #Almacena el nombre de la ciudad
@@ -64,6 +69,79 @@ class Ciudades (models.Model):
         max_length = 5,
         unique = True,
         verbose_name = 'Código DANE'
+    )
+
+    def __str__(self):
+        return self.nombre
+
+    class Meta:
+        ordering = ['id']
+
+class ClasificacionDian (models.Model):
+    nombre = models.CharField(
+        max_length = 50,
+        null = False,
+        verbose_name = 'Clasificación DIAN'
+    )
+    estado = models.ForeignKey (
+        Estado,
+        on_delete=models.CASCADE,
+        verbose_name='Estado'
+    )
+
+    def __str__(self):
+        return self.nombre
+
+class TipoContribuyente (models.Model):
+    nombre = models.CharField(
+        max_length = 50,
+        null = False,
+        verbose_name = 'Clasificación DIAN'
+    )
+    estado = models.ForeignKey (
+        Estado,
+        on_delete=models.CASCADE,
+        verbose_name='Estado'
+    )
+
+    def __str__(self):
+        return self.nombre
+
+class ActividadEconomica (models.Model):
+    nombre = models.CharField(
+        max_length= 50,
+        null = False,
+        verbose_name='Actividad económica'
+    )
+    codigo = models.CharField(
+        max_length=50,
+        null=False,
+        verbose_name='Código de la actividad económica'
+    )
+    estado = models.ForeignKey (
+        Estado,
+        on_delete=models.CASCADE,
+        verbose_name='Estado'
+    )
+
+    def __str__(self):
+        return self.nombre
+
+class TiposResponsabilidades (models.Model):
+    nombre = models.CharField(
+        max_length= 50,
+        null = False,
+        verbose_name='Responsabilidad'
+    )
+    codigo = models.CharField(
+        max_length=50,
+        null=False,
+        verbose_name='Código de responsabilidades'
+    )
+    estado = models.ForeignKey (
+        Estado,
+        on_delete=models.CASCADE,
+        verbose_name='Estado'
     )
 
     def __str__(self):

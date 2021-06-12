@@ -18,6 +18,7 @@ from django.urls import path, include
 urlpatterns = [
     path ('objensayo/', include('Apps.ObjEnsayo.urls')),
     path ('analisis/', include('Apps.Analisis.urls')),
-    
+    path ('clientes/', include('Apps.Clientes.urls')),
+    path ('comunes/', include('Apps.comunes.urls')),
     path('select2/', include('django_select2.urls'))
 ]

@@ -99,3 +99,31 @@ class ActualizarObjEnsayo (UpdateView):
         kwargs = super().get_form_kwargs()
         kwargs['crear'] = False
         return kwargs
+
+    def form_valid (self, form):
+        context = self.get_context_data()
+        analisis = context ['analisis']
+
+        if analisis.is_valid():
+            self.object = form.save()
+            analisis.instance = self.object
+            analisis.save()
+        else:
+            messages.error (
+                self.request,
+                "Error al actualizar el objeto de ensayo, por favor revise los datos"
+            )
+            return super(ActualizarObjEnsayo, self).form_invalid(form)
+
+        messages.success (
+            self.request,
+            "Se ha actualizado exitosamente el objeto de ensayo"
+        )
+        return super(ActualizarObjEnsayo, self).form_valid(form)
+
+    def form_invalid (self, form):
+        messages.error (
+            self.request,
+            "Error al actualizar el objeto de ensayo, por favor revise los datos"
+        )
+        return super(ActualizarObjEnsayo, self).form_invalid(form)

@@ -2,13 +2,12 @@
 {% load static %}
 
 {% block titulo %}
-  {{ boton }} análisis de laboratorio
+    {{ boton }}
 {% endblock %}
 
 {% block extrahead %}
-  <link href="{% static 'css/plugins/select2/select2.min.css' %}" rel="stylesheet">
-  <link href="{% static 'css/plugins/select2/select2-bootstrap4.min.css' %}" rel="stylesheet">
-{% endblock%}
+  
+{% endblock %}
 
 {% block contenido %}
     <div class="col-lg-6">
@@ -23,64 +22,18 @@
                 </div>
 
                 <div class="fieldWrapper col-lg-6">
-                    {{ form.sigia.errors }}
-                    <label for="{{ form.sigia.id_for_label }}">{{ form.sigia.label }}: </label>
-                    {{ form.sigia }}
-                </div>
-            </div>
-
-            <div class="row">                
-                <div class="fieldWrapper col-lg-6">
                     {{ form.estado.errors }}
                     <label for="{{ form.estado.id_for_label }}">{{ form.estado.label }}: </label>
                     {{ form.estado }}
-                </div>  
-                <div class="fieldWrapper col-lg-6">
-                    {{ form.unidad_medida.errors }}
-                    <label for="{{ form.unidad_medida.id_for_label }}">{{ form.unidad_medida.label }}: </label>
-                    {{ form.unidad_medida }}
-                </div>             
+                </div>
             </div>
-
-            <div class="row">                
+            <div class="row">
                 <div class="fieldWrapper col-lg-6">
-                    {{ form.valor_minimo.errors }}
-                    <label for="{{ form.valor_minimo.id_for_label }}">{{ form.valor_minimo.label }}: </label>
-                    {{ form.valor_minimo }}
-                </div>  
-                <div class="fieldWrapper col-lg-6">
-                    {{ form.valor_maximo.errors }}
-                    <label for="{{ form.valor_maximo.id_for_label }}">{{ form.valor_maximo.label }}: </label>
-                    {{ form.valor_maximo }}
-                </div>             
+                    {{ form.codigo.errors }}
+                    <label for="{{ form.codigo.id_for_label }}">{{ form.codigo.label }}: </label>
+                    {{ form.codigo }}
+                </div>
             </div>
-
-            <div class="row">                
-                <div class="fieldWrapper col-lg-6">
-                    {{ form.fase.errors }}
-                    <label for="{{ form.fase.id_for_label }}">{{ form.fase.label }}: </label>
-                    {{ form.fase }}
-                </div>  
-                <div class="fieldWrapper col-lg-6">
-                    {{ form.precio.errors }}
-                    <label for="{{ form.unidad_medida.id_for_label }}">{{ form.precio.label }}: </label>
-                    {{ form.precio }}
-                </div>             
-            </div>
-
-            <div class="row">                
-                <div class="fieldWrapper col-lg-6">
-                    {{ form.iva.errors }}
-                    <label for="{{ form.iva.id_for_label }}">{{ form.iva.label }}: </label>
-                    {{ form.iva }}
-                </div>  
-                <div class="fieldWrapper col-lg-6">
-                    {{ form.tipoIva.errors }}
-                    <label for="{{ form.tipoIva.id_for_label }}">{{ form.tipoIva.label }}: </label>
-                    {{ form.tipoIva }}
-                </div>             
-            </div>
-
             <div class="form-group">
                 <label class="control-label col-md-4 col-sm-4"></label>
                 <div class="col-md-6 col-sm-6">
@@ -94,7 +47,7 @@
     <div class="col-lg-6 ">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5>Listado de análisis</h5>
+                <h5>Listado de responsabilidades fiscales</h5>
                 <div class="ibox-tools">
                     <a class="collapse-link">
                         <i class="fa fa-chevron-up"></i>
@@ -106,14 +59,14 @@
             </div>
             <div class="ibox-content">
                 <div class="row">
-
+  
                     <input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Buscar en la tabla">
-
+  
                     <table class="footable table table-stripped" data-page-size="8" data-filter=#filter>
                         <thead>
                             <tr>
                                 <th>Nombre</th>
-                                <th>Fase</th>
+                                <th>Código</th>
                                 <th>Estado</th>
                                 <th>Acción</th>
                             </tr>
@@ -125,13 +78,13 @@
                                         {{ tipo.nombre }}
                                     </td>
                                     <td>
-                                        {{ tipo.fase }}
+                                        {{ tipo.codigo }}
                                     </td>
                                     <td>
                                         {{ tipo.estado }}
                                     </td>
                                     <td>
-                                        <a href="{% url 'Analisis:editar' tipo.id %}" class="btn btn-primary"> Editar </a>
+                                        <a href="{% url 'comunes:editar_responsabilidadfiscal' tipo.id %}" class="btn btn-primary"> Editar </a>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -146,7 +99,7 @@
                     </table>
                 </div>
             </div>
-
+  
         </div>
     </div>
 {% endblock %}
@@ -160,20 +113,5 @@
 
         });
 
-    </script>
-
-    {{ form.media.js }}    
-    <script src="{% static 'js/plugins/select2/select2.full.min.js' %}"></script>
-
-    <script>
-        $(document).ready(function() {
-
-            $('.footable').footable();
-            $(".select2_demo_2").select2({
-                theme: 'bootstrap4',
-            });
-            $(".select2_demo_2").djangoSelect2();
-
-        });
     </script>
 {% endblock%}
