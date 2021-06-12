@@ -131,12 +131,6 @@ class SedeCliente (models.Model):
         on_delete=models.CASCADE,
         verbose_name='Cliente'
     )
-    # dirección dónde está ublicado
-    direccion = models.CharField(
-        max_length = 50,
-        null = False,
-        verbose_name = 'Dirección'
-    )
     # el nombre del responsable técnico
     responsable_tecnico = models.CharField(
         max_length = 100,

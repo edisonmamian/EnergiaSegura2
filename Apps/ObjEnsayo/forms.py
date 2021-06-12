@@ -21,6 +21,11 @@ class FormTiposObjEnsayo (forms.ModelForm):
         self.crear = kwargs.pop('crear', None)
         super (FormTiposObjEnsayo, self).__init__(*args, **kwargs)
 
+        if self.crear:
+            boton = 'Registrar'
+        else:
+            boton = 'Actualizar'
+
         self.helper = FormHelper()
         self.helper.form_tag = True
         self.helper.form_class = 'form-horizontal'
@@ -28,15 +33,33 @@ class FormTiposObjEnsayo (forms.ModelForm):
         self.helper.field_class = 'col-md-9'
         self.helper.layout = Layout(
             Div(
-                Field('nombre'),
-                Field('vidaUtilIndefinida'),
-                Field('vidaUtil'),
-                Field('estado'),
+                Div(
+                    Div(
+                        Field('nombre', css_class='form form-control'),
+                        css_class = 'col-lg-6'
+                    ),
+                    Div(  
+                        Field('estado', css_class='form form-control'),
+                        css_class = 'col-lg-6'
+                    ),
+                    css_class = ' row'
+                ),
+                Div(
+                    Div(
+                        Field('vidaUtilIndefinida', css_class='form form-control'),
+                        css_class = 'col-lg-6'
+                    ),
+                    Div(
+                        Field('vidaUtil', css_class='form form-control '),
+                        css_class = 'col-lg-6'
+                    ),
+                    css_class = 'row'
+                ),                
                 HTML("<br>"),
                 Fieldset('Agregar análisis',
                     Formset('analisis')),
                 HTML("<br>"),
-                ButtonHolder(Submit('submit', 'Registrar')),
+                ButtonHolder(Submit('submit', boton)),
                 )
             )
                 

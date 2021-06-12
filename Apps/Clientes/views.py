@@ -92,14 +92,35 @@ class CrearClientes (CreateView):
         context = super(CrearClientes, self).get_context_data(**kwargs)
         context['boton']= "Registrar"
 
+        if self.request.POST:
+            context['cliente'] = FormSet_Clientes_Sedes (
+                self.request.POST
+            )
+        else:
+            context['cliente'] = FormSet_Clientes_Sedes ()
+
         return context
 
     def form_valid (self, form):
-        messages.success (
+        context = self.get_context_data()
+        cliente = context['cliente']
+
+        if cliente.is_valid():
+            self.object = form.save()
+            cliente.instance = self.object
+            cliente.save()
+        else:
+            messages.error (
+                self.request,
+                "Error al registrar el cliente, por favor revise los datos"
+            )
+            return super(CrearClientes, self).form_invalid(form)
+        messages.success(
             self.request,
             "Se ha registrado exitosamente el cliente"
         )
         return super(CrearClientes, self).form_valid(form)
+       
 
     def form_invalid (self, form):
         messages.error (
@@ -125,14 +146,38 @@ class ActualizarClientes (UpdateView):
         context = super(ActualizarClientes, self).get_context_data(**kwargs)
         context['boton']= "Registrar"
 
+        if self.request.POST:
+            context['analisis'] = FormSet_Clientes_Sedes (
+                self.request.POST,
+                instance=self.object
+            )
+        else:
+            context['analisis'] = FormSet_Clientes_Sedes (
+                instance=self.object
+            )
+
         return context
 
     def form_valid (self, form):
-        messages.success (
+        context = self.get_context_data()
+        cliente = context['cliente']
+
+        if cliente.is_valid():
+            self.object = form.save()
+            cliente.instance = self.object
+            cliente.save()
+        else:
+            messages.error (
+                self.request,
+                "Error al registrar el cliente, por favor revise los datos"
+            )
+            return super(ActualizarClientes, self).form_invalid(form)
+        messages.success(
             self.request,
             "Se ha actualizado exitosamente el cliente"
         )
         return super(ActualizarClientes, self).form_valid(form)
+       
 
     def form_invalid (self, form):
         messages.error (
@@ -140,6 +185,7 @@ class ActualizarClientes (UpdateView):
             "Error al actualizar el cliente, por favor revise los datos"
         )
         return super(ActualizarClientes, self).form_invalid(form)
+
 
 class ListarClients (ListView):
     model = Clientes
