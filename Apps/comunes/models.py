@@ -47,6 +47,9 @@ class Departamentos (models.Model):
     def __str__(self):
         return self.nombre
 
+    class Meta:
+        ordering = ['id']
+
 #modelo para las ciudades de Colombia
 class Ciudades (models.Model):
     #Almacena el nombre de la ciudad
@@ -70,6 +73,9 @@ class Ciudades (models.Model):
 
     def __str__(self):
         return self.nombre
+
+    class Meta:
+        ordering = ['id']
 
 class ClasificacionDian (models.Model):
     nombre = models.CharField(

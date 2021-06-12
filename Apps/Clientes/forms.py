@@ -8,6 +8,7 @@ from django.forms.models import inlineformset_factory
 from .models import *
 from .custom_layout_object import *
 from Apps.ObjEnsayo.models import TiposObjEnsayo
+from Apps.comunes.models import Departamentos, Ciudades
 
 class FormClasificacion (forms.ModelForm):
     class Meta:
@@ -151,7 +152,7 @@ class FormCliente (forms.ModelForm):
                 ),   
                 Div(
                     Div(
-                        Field('plazo', css_class='form form-control'),
+                        Field('actividadEconomica', css_class='form form-control'),
                         css_class = 'col-lg-6'
                     ),
                     css_class = 'row'
@@ -313,7 +314,7 @@ class FormSede (forms.ModelForm):
                     cliente=form_data['cliente'],
                     nombre = form_data['nombre']
                 )
-                self._error ['nombre'] = ['La sede ya existe']
+                self.__error ['nombre'] = ['La sede ya existe']
             except SedeCliente.DoesNotExist:
                 pass
         else:
@@ -323,7 +324,7 @@ class FormSede (forms.ModelForm):
                     cliente=form_data['cliente'],
                     nombre = form_data['nombre']
                 )
-                self._error ['nombre'] = ['La sede ya existe']
+                self.__error ['nombre'] = ['La sede ya existe']
             except SedeCliente.DoesNotExist:
                 pass
 
