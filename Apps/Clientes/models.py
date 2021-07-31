@@ -87,6 +87,12 @@ class Clientes (models.Model):
         limit_choices_to={'estado': 1},
         verbose_name='Tipo de responsabilidad económica'
     )
+    documentoContable = models.ForeignKey(
+        DocumentosContablesInventarios,
+        on_delete=models.CASCADE,
+        limit_choices_to={'estado': 1},
+        verbose_name= 'Documento contable'
+    )
 
     def __str__(self):
         return self.nombre

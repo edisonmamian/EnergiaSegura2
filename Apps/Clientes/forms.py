@@ -67,7 +67,8 @@ class FormCliente (forms.ModelForm):
             'contribuyente',
             'plazo',
             'actividadEconomica',
-            'tiposResponsabilidades'
+            'tiposResponsabilidades',
+            'documentoContable'
         ]
         widgets = {
             'clasificacion' : ModelSelect2MultipleWidget (
@@ -154,6 +155,10 @@ class FormCliente (forms.ModelForm):
                         Field('actividadEconomica', css_class='form form-control'),
                         css_class = 'col-lg-6'
                     ),
+                    Div(
+                        Field('documentoContable', css_class='form form-control'),
+                        css_class = 'col-lg-6'
+                    ),
                     css_class = 'row'
                 ),              
                 HTML("<br>"),
@@ -184,6 +189,9 @@ class FormCliente (forms.ModelForm):
             'class': 'form-control'
         }
         self.fields['actividadEconomica'].widget.attrs = {
+            'class': 'form-control'
+        }
+        self.fields['documentoContable'].widget.attrs = {
             'class': 'form-control'
         }
 
