@@ -150,7 +150,7 @@ class TiposResponsabilidades (models.Model):
 
 class DocumentosContablesInventarios (models.Model):
     abreviacion = models.CharField(
-        max_length=0,
+        max_length=10,
         null = False,
         verbose_name='Abreviación'
     )
