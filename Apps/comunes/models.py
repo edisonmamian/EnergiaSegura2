@@ -62,7 +62,8 @@ class Ciudades (models.Model):
     departamento = models.ForeignKey(
         Departamentos,
         on_delete=models.CASCADE,
-        verbose_name = 'Departamento'
+        verbose_name = 'Departamento',
+        related_name="ciudad"
     )
     #Almacena el código de identificación de la ciudad
     codigo_dane = models.CharField (
