@@ -7,7 +7,7 @@
     {{ formset.management_form|crispy }}
 
     {% for form in formset.forms %}
-        <div class="{% cycle 'row1' 'row2' %} formset_row-{{ formset.prefix }}">   
+        <div class="{% cycle 'row1' 'row2' %} formset_row-{{ formset.prefix }}" id="formset_row-{{ formset.prefix }}">   
                 
             
                 <div class="borde">
@@ -112,16 +112,9 @@
 
 
 <br>
+
 <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
 <script src="{% static 'js/jquery.formset.js' %}"></script>
-<script type="text/javascript">
-    $('.formset_row-{{ formset.prefix }}').formset({
-        addText: 'Agregar otro',
-        deleteText: 'Quitar',
-        prefix: '{{ formset.prefix }}',
-    });
-    
-</script>
 {{ form.media.js }}  
 <script src="{% static 'js/plugins/select2/select2.full.min.js' %}"></script>
 
@@ -135,3 +128,15 @@
 
     });
 </script>
+<script type="text/javascript">
+    $('.formset_row-{{ formset.prefix }}').formset({
+        addText: 'Agregar otro',
+        deleteText: 'Quitar',
+        prefix: '{{ formset.prefix }}',
+        added: function($row) {
+            $('#id_allowance-'+$row[0].rowIndex+'-accounts').select2({ width:'resolve'});
+        }
+    });
+    
+</script>
+

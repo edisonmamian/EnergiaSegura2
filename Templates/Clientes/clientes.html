@@ -10,6 +10,8 @@
 {% block extrahead %}
     <link href="{% static 'css/plugins/select2/select2.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/plugins/select2/select2-bootstrap4.min.css' %}" rel="stylesheet">
+
+    {{ form.media.css }} 
 {% endblock %}
 
 {% block contenido %}
@@ -23,6 +25,7 @@
 {% endblock %}
 
 {% block scripts %}  
+    
     {{ form.media.js }}  
     <script src="{% static 'js/plugins/select2/select2.full.min.js' %}"></script>
 
