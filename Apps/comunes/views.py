@@ -348,3 +348,73 @@ class ActualizarTiposResponsabilidades (UpdateView):
             "Error al actualizar la responsabilidad fiscal, por favor revise los datos"
         )
         return super(ActualizarTiposResponsabilidades, self).form_invalid(form)
+
+########### DOCUMENTOS CONTABLES
+class CrearDocumentoContableInventario (CreateView):
+    model = DocumentosContablesInventarios
+    form_class = FormDocumentosContablesInventarios
+    template_name = 'comunes/documentoscontables.html'
+
+    def get_success_url(self):
+        return reverse("comunes:crear_documentocontable")
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['crear'] = True
+        return kwargs
+
+    def get_context_data(self, **kwargs):
+        context = super(CrearDocumentoContableInventario, self).get_context_data(**kwargs)
+        context ['boton'] = 'Registrar'
+        context ['documentos'] = DocumentosContablesInventarios.objects.all()
+
+        return context 
+
+    def form_valid(self, form):
+        messages.success (
+            self.request,
+            "Se ha creado exitosamente el documento contable"
+        )
+        return super(CrearDocumentoContableInventario, self).form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(
+            self.request,
+            "Error al crear el documento contable, por favor revise los datos"
+        )
+        return super(CrearDocumentoContableInventario, self).form_invalid(form)
+
+class ActualizarDocumentoContableInventario (UpdateView):
+    model = DocumentosContablesInventarios
+    form_class = FormDocumentosContablesInventarios
+    template_name = 'comunes/documentoscontables.html'
+
+    def get_success_url(self):
+        return reverse("comunes:crear_documentocontable")
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['crear']= False
+        return kwargs
+
+    def get_context_data(self, **kwargs):
+        context = super(ActualizarDocumentoContableInventario, self).get_context_data(**kwargs)
+        context ['boton'] = 'Actualizar'
+        context ['documentos'] = DocumentosContablesInventarios.objects.all()
+
+        return context
+
+    def form_valid(self, form):
+        messages.success(
+            self.request,
+            "Se ha modificado exitosamente el documento contable"
+        )
+        return super(ActualizarDocumentoContableInventario, self).form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(
+            self.request,
+            "Error al modificar el documento contable, por favor revise los datos"
+        )
+        return super(ActualizarDocumentoContableInventario, self).form_invalid(form)
+

@@ -1,5 +1,4 @@
 from django import forms
-from django.db.models import fields
 
 from .models import *
 
@@ -34,6 +33,7 @@ class FormTipoIdentificacion (forms.ModelForm):
             try:
                 clasificacion = TipoIdentificacion.objects.exclude(nombre = self.instance)
                 clasificacion = clasificacion.get(nombre = form_data['nombre'])
+                self._errors['nombre'] = ['El tipo de identificación ya existe']
             except TipoIdentificacion.DoesNotExist:
                 pass
 
@@ -68,6 +68,7 @@ class FormClasificacionDian (forms.ModelForm):
             try:
                 clasificacion = ClasificacionDian.objects.exclude(nombre = self.instance)
                 clasificacion = clasificacion.get(nombre = form_data['nombre'])
+                self._errors['nombre'] = ['La clasificación DIAN ya existe']
             except ClasificacionDian.DoesNotExist:
                 pass 
 
@@ -102,6 +103,7 @@ class FormTipoContribuyente (forms.ModelForm):
             try:
                 clasificacion = TipoContribuyente.objects.exclude(nombre = self.instance)
                 clasificacion = clasificacion.get(nombre = form_data['nombre'])
+                self._errors['nombre'] = ['Tipo de contribuyente ya existe']
             except TipoContribuyente.DoesNotExist:
                 pass 
 
@@ -140,6 +142,7 @@ class FormActividadEconomica (forms.ModelForm):
             try:
                 clasificacion = ActividadEconomica.objects.exclude(nombre = self.instance)
                 clasificacion = clasificacion.get(codigo = form_data['codigo'])
+                self._errors['codigo'] = ['La actividad económica ya existe']
             except ActividadEconomica.DoesNotExist:
                 pass 
 
@@ -178,5 +181,45 @@ class FormTiposResponsabilidades (forms.ModelForm):
             try:
                 clasificacion = TiposResponsabilidades.objects.exclude(nombre = self.instance)
                 clasificacion = clasificacion.get(codigo = form_data['codigo'])
+                self._errors['codigo'] = ['La responsabilidad ya existe']
             except TiposResponsabilidades.DoesNotExist:
+                pass 
+
+class FormDocumentosContablesInventarios (forms.ModelForm):
+    class Meta:
+        model = DocumentosContablesInventarios
+        fields = [
+            'abreviacion',
+            'documentoContable',
+            'estado'
+        ]
+
+    def __init__(self, *args, **kwargs):
+        self.crear = kwargs.pop('crear', None)
+        super(FormDocumentosContablesInventarios, self).__init__(*args, **kwargs)
+        self.fields['abreviacion'].widget.attrs = {
+            'class': 'form-control'
+        }
+        self.fields['documentoContable'].widget.attrs = {
+            'class': 'form-control'
+        }
+        self.fields['estado'].widget.attrs = {
+            'class': 'form-control'
+        }
+
+    def clean (self):
+        form_data = super(FormDocumentosContablesInventarios, self).clean()
+
+        if self.crear:
+            try:
+                abreviacion = DocumentosContablesInventarios.objects.get(abreviacion = form_data['abreviacion'])
+                self._errors['abreviacion'] = ['El documento contable ya existe']
+            except DocumentosContablesInventarios.DoesNotExist:
+                pass
+        else:
+            try:
+                abreviacion = DocumentosContablesInventarios.objects.exclude(nombre = self.instance)
+                abreviacion = abreviacion.get(abreviacion = form_data['abreviacion'])
+                self._errors['abreviacion'] = ['El documento contable ya existe']
+            except DocumentosContablesInventarios.DoesNotExist:
                 pass 

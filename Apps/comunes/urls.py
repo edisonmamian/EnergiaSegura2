@@ -13,4 +13,6 @@ urlpatterns = [
     path ('actividadeconomica/editar/<int:pk>/', ActualizarActividadEconomica.as_view(), name = 'editar_actividadeconomica'),
     path ('responsabilidadfiscal/crear/', CrearTiposResponsabilidades.as_view(), name = 'crear_responsabilidadfiscal'),
     path ('responsabilidadfiscal/editar/<int:pk>/', ActualizarTiposResponsabilidades.as_view(), name = 'editar_responsabilidadfiscal'),
+    path ('documentoscontables/crear/', CrearDocumentoContableInventario.as_view(), name= 'crear_documentocontable'),
+    path ('documentoscontables/editar/<int:pk>/', ActualizarDocumentoContableInventario.as_view(), 'editar_documentocontable')
 ]
