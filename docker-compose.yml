@@ -4,11 +4,15 @@ services:
         build: .
         command: sh -c "
             python manage.py migrate && 
+            python manage.py loaddata InitialData/comunes.json &&
             python manage.py runserver 0.0.0.0:8000"
         ports:
             - "8000:8000"
         volumes:
             - .:/code
-    redis:
-        build: .
+        depends_on: 
+            - redis_server
+    redis_server:
+        image: redis:alpine3.14
+
 
