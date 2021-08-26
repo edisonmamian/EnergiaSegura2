@@ -3,7 +3,10 @@ services:
     django:
         build: .
         command: sh -c "
+            apk add sqlite &&
+            python manage.py makemigrations &&
             python manage.py migrate && 
+            cp ./InitialData/json.py /usr/local/lib/python3.9/site-packages/django/core/serializers &&
             python manage.py loaddata InitialData/comunes.json &&
             python manage.py runserver 0.0.0.0:8000"
         ports:

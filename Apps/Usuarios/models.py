@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User, Group
 
-from Apps.comunes.models import TipoIdentificacion
+from Apps.comunes.models import TipoIdentificacion, Estado
 # Create your models here.
 
 class Usuario (User):
@@ -38,3 +38,10 @@ class Usuario (User):
 
     def __str__(self):
         return '%s %s' % (self.first_name , self.last_name)
+
+class Roles (Group):
+    estado = models.ForeignKey(
+        Estado,
+        on_delete=models.CASCADE,
+        verbose_name='Estado'
+    )
