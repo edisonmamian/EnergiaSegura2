@@ -137,7 +137,11 @@
                                         {{ tipo.rol }}
                                     </td>
                                     <td>
-                                        {{ tipo.estado }}
+                                        {% if tipo.is_active %}
+                                            Activo 
+                                        {% else %}
+                                            Inactivo
+                                        {% endif %}
                                     </td>
                                     <td>
                                         <a href="{% url 'usuarios:usuarios_editar' tipo.id %}" class="btn btn-primary"> Editar </a>

@@ -1,6 +1,8 @@
-from django.urls import reverse
-from django.views.generic import CreateView, UpdateView
+from django.urls import reverse, reverse_lazy
+from django.views.generic import CreateView, UpdateView, FormView
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout,update_session_auth_hash
+from django.http import HttpResponseRedirect, HttpResponse
 from .models import *
 from .forms import *
 
@@ -84,6 +86,26 @@ class CrearUsuario (CreateView):
         kwargs['crear'] = True
         return kwargs
 
+    def get_context_data(self, **kwargs):
+        context = super(CrearUsuario, self).get_context_data(**kwargs)
+        context['boton']= "Registrar"
+        context['tipos']= Usuario.objects.all()
+        return context
+
+    def form_valid (self, form):
+        messages.success (
+            self.request,
+            "Se ha actualizado exitosamente el usuario"
+        )
+        return super(CrearUsuario, self).form_valid(form)
+
+    def form_invalid (self, form):
+        messages.error (
+            self.request,
+            "Error al actualizar el usuario, por favor revise los datos"
+        )
+        return super(CrearUsuario, self).form_invalid(form)
+
 class EditarUsuario (UpdateView):
     model = Usuario
     form_class = FormUsuario
@@ -96,3 +118,50 @@ class EditarUsuario (UpdateView):
         kwargs = super().get_form_kwargs()
         kwargs['crear'] = False
         return kwargs
+
+    def get_context_data(self, **kwargs):
+        context = super(EditarUsuario, self).get_context_data(**kwargs)
+        context['boton']= "Actualizar"
+        context['tipos']= Usuario.objects.all()
+        return context
+
+    def form_valid (self, form):
+        messages.success (
+            self.request,
+            "Se ha actualizado exitosamente el usuario"
+        )
+        return super(EditarUsuario, self).form_valid(form)
+
+    def form_invalid (self, form):
+        messages.error (
+            self.request,
+            "Error al actualizar el usuario, por favor revise los datos"
+        )
+        return super(EditarUsuario, self).form_invalid(form)
+
+class LoginUsuario(FormView):
+    template_name = 'usuarios/login.html'
+    form_class = LoginForm
+    success_url = reverse_lazy ('Usuarios:listar')
+
+    def form_valid(self, form):
+        credentials = form.cleaned_data
+
+        user = authenticate(
+            username = credentials['username'],
+            password = credentials['password']
+        )
+
+        if user is not None:
+            login (self.request, user)
+            return HttpResponseRedirect(self.success_url)
+        else:
+            messages.error(
+                self.request,
+                "No se pudo autenticar en el sistema"
+            )
+            return HttpResponseRedirect(reverse_lazy('usuarios:login'))
+
+def LogoutUsuario(request):
+    logout(request)
+    return HttpResponseRedirect(reverse_lazy('usuarios:login'))
