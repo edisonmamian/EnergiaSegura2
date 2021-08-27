@@ -71,3 +71,28 @@ class EditarRoles (UpdateView):
         )
         return super(EditarRoles, self).form_invalid(form)
     
+class CrearUsuario (CreateView):
+    model = Usuario
+    form_class = FormUsuario
+    template_name = 'Usuarios/usuarios.html'
+
+    def get_success_url(self):
+        return reverse("usuarios:usuarios_crear")
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['crear'] = True
+        return kwargs
+
+class EditarUsuario (UpdateView):
+    model = Usuario
+    form_class = FormUsuario
+    template_name = 'Usuarios/usuarios.html'
+
+    def get_success_url(self):
+        return reverse("usuarios:usuarios_crear")
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['crear'] = False
+        return kwargs

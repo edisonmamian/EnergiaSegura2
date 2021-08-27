@@ -3,6 +3,12 @@ from django.contrib.auth.models import User, Group
 
 from Apps.comunes.models import TipoIdentificacion, Estado
 # Create your models here.
+class Roles (Group):
+    estado = models.ForeignKey(
+        Estado,
+        on_delete=models.CASCADE,
+        verbose_name='Estado'
+    )
 
 class Usuario (User):
     tipo_documento = models.ForeignKey(
@@ -31,17 +37,12 @@ class Usuario (User):
         blank=True
     )
     rol = models.ForeignKey(
-        Group,
+        Roles,
         on_delete=models.CASCADE,
-        verbose_name="Rol"
+        verbose_name="Rol",
+        limit_choices_to={'estado': 1}
     )
 
     def __str__(self):
         return '%s %s' % (self.first_name , self.last_name)
 
-class Roles (Group):
-    estado = models.ForeignKey(
-        Estado,
-        on_delete=models.CASCADE,
-        verbose_name='Estado'
-    )

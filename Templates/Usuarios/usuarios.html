@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titulo %}
+    {{ boton }}
+{% endblock %}
+
+{% block extrahead %}
+   
+{% endblock %}
+
+{% block contenido %}
+    <div class="col-lg-6">
+        <form  method="POST" class="form-horizontal form-bordered " data-parsley-validate="true"> {% csrf_token %}
+            
+            {{ form.non_field_errors }}
+            <div class="row">
+                <div class="fieldWrapper col-lg-6">
+                    {{ form.first_name.errors }}
+                    <label for="{{ form.name.id_for_label }}">{{ form.first_name.label }}: </label>
+                    {{ form.first_name }}
+                </div>
+
+                <div class="fieldWrapper col-lg-6">
+                    {{ form.segundo_nombre.errors }}
+                    <label for="{{ form.segundo_nombre.id_for_label }}">{{ form.segundo_nombre.label }}: </label>
+                    {{ form.segundo_nombre }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="fieldWrapper col-lg-6">
+                    {{ form.last_name.errors }}
+                    <label for="{{ form.last_name.id_for_label }}"> {{ form.last_name.label }}</label>
+                    {{ form.last_name }}
+                </div>
+                <div class="fieldWrapper col-lg-6">
+                    {{ form.segundo_apellido.errors }}
+                    <label for="{{ form.segundo_apellido.id_for_label }}"> {{ form.segundo_apellido.label }}</label>
+                    {{ form.segundo_apellido }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="fieldWrapper col-lg-6">
+                    {{ form.tipo_documento.errors }}
+                    <label for="{{ form.tipo_documento.id_for_label }}"> {{ form.tipo_documento.label }}</label>
+                    {{ form.tipo_documento }}
+                </div>
+                <div class="fieldWrapper col-lg-6">
+                    {{ form.num_documento.errors }}
+                    <label for="{{ form.num_documento.id_for_label }}"> {{ form.num_documento.label }}</label>
+                    {{ form.num_documento }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="fieldWrapper col-lg-6">
+                    {{ form.email.errors }}
+                    <label for="{{ form.email.id_for_label }}"> {{ form.email.label }}</label>
+                    {{ form.email }}
+                </div>
+                <div class="fieldWrapper col-lg-6">
+                    {{ form.telefono.errors }}
+                    <label for="{{ form.telefono.id_for_label }}"> {{ form.telefono.label }}</label>
+                    {{ form.telefono }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="fieldWrapper col-lg-6">
+                    {{ form.username.errors }}
+                    <label for="{{ form.username.id_for_label }}"> {{ form.username.label }}</label>
+                    {{ form.username }}
+                </div>
+                <div class="fieldWrapper col-lg-6">
+                    {{ form.password.errors }}
+                    <label for="{{ form.password.id_for_label }}"> {{ form.password.label }}</label>
+                    {{ form.password }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="fieldWrapper col-lg-6">
+                    {{ form.rol.errors }}
+                    <label for="{{ form.rol.id_for_label }}"> {{ form.rol.label }}</label>
+                    {{ form.rol }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4 col-sm-4"></label>
+                <div class="col-md-6 col-sm-6">
+                    <button type="submit" class="btn btn-primary add-gritter-light">
+                    {{ boton }}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-lg-6 ">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Listado de Roles</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+  
+                    <input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Buscar en la tabla">
+  
+                    <table class="footable table table-stripped" data-page-size="8" data-filter=#filter>
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Usurios</th>
+                                <th>Rol</th>
+                                <th>Estado</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for tipo in tipos %}
+                                <tr>
+                                    <td>
+                                        {{ tipo.nombre }}
+                                    </td>
+                                    <td>
+                                        {{ tipo.username }}
+                                    </td>
+                                    <td>
+                                        {{ tipo.rol }}
+                                    </td>
+                                    <td>
+                                        {{ tipo.estado }}
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'usuarios:usuarios_editar' tipo.id %}" class="btn btn-primary"> Editar </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5">
+                                    <ul class="pagination pull-right"></ul>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+  
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}    
+    <script src="{% static 'js/plugins/footable/footable.all.min.js' %}"></script>
+    <script>
+        $(document).ready(function() {
+
+            $('.footable').footable();
+
+        });
+
+    </script>
+{% endblock%}
