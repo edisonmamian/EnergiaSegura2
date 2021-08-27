@@ -23,6 +23,12 @@ class FormUsuario (forms.ModelForm):
     def __init__ (self, *args, **kwargs):
         self.crear = kwargs.pop('crear', None)
         super (FormUsuario, self).__init__(*args, **kwargs)
+        self.fields['first_name'].label = 'Primer nombre'
+        self.fields['last_name'].label = 'Primer apellido'
+        self.fields['username'].label = 'Usuario'
+        self.fields['first_name'].required = True
+        self.fields['last_name'].required = True
+        self.fields['username'].required = True
 
         self.fields['tipo_documento'].widget.attrs = {
             'class': 'form-control'
