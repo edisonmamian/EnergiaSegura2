@@ -72,8 +72,19 @@ class ItemRecibido (models.Model):
     )
     analisis = models.ManyToManyField(
         Analisis,
-        on_delete = models.CASCADE,
         verbose_name='Servicios'
+    )
+    accesorio = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+        verbose_name='Accesorios'
+    )
+    capacidad = models.CharField(
+        max_length=5,
+        null=True,
+        blank=True,
+        verbose_name='Capacidad'
     )
     valvula = models.CharField(
         max_length=50,
