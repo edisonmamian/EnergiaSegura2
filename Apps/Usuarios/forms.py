@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import Permission
 from .models import *
 
-class FormUsuario (forms.ModelForm):
+class FormUsuario (UserCreationForm):
     class Meta:
         model = Usuario
         fields = [
@@ -17,7 +17,8 @@ class FormUsuario (forms.ModelForm):
             'email',
             'telefono',
             'username',
-            'password',
+            'password1',
+            'password2',
             'rol'
         ]
 
@@ -59,7 +60,10 @@ class FormUsuario (forms.ModelForm):
         self.fields['username'].widget.attrs = {
             'class': 'form-control'
         }
-        self.fields['password'].widget.attrs = {
+        self.fields['password1'].widget.attrs = {
+            'class': 'form-control'
+        }
+        self.fields['password2'].widget.attrs = {
             'class': 'form-control'
         }
         self.fields['rol'].widget.attrs = {
@@ -109,6 +113,7 @@ class FormUsuario (forms.ModelForm):
             except Usuario.DoesNotExist:
                 pass 
 
+        return form_data
 
 
 class FormGrupos (forms.ModelForm):
@@ -164,6 +169,8 @@ class FormGrupos (forms.ModelForm):
                 self._errors['nombre'] = ['El rol ya existe']
             except Roles.DoesNotExist:
                 pass 
+
+        return form_data
 
 class LoginForm (forms.Form):
     username = forms.CharField(

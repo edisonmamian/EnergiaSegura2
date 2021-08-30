@@ -73,17 +73,22 @@
                     {{ form.username }}
                 </div>
                 <div class="fieldWrapper col-lg-6">
-                    {{ form.password.errors }}
-                    <label for="{{ form.password.id_for_label }}"> {{ form.password.label }}</label>
-                    {{ form.password }}
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="fieldWrapper col-lg-6">
                     {{ form.rol.errors }}
                     <label for="{{ form.rol.id_for_label }}"> {{ form.rol.label }}</label>
                     {{ form.rol }}
+                </div>
+            </div>
+
+            <div class="row">                
+                <div class="fieldWrapper col-lg-6">
+                    {{ form.password1.errors }}
+                    <label for="{{ form.password1.id_for_label }}"> {{ form.password1.label }}</label>
+                    {{ form.password1 }}
+                </div>
+                <div class="fieldWrapper col-lg-6">
+                    {{ form.password2.errors }}
+                    <label for="{{ form.password2.id_for_label }}"> {{ form.password2.label }}</label>
+                    {{ form.password2 }}
                 </div>
             </div>
             <div class="form-group">
