@@ -1,6 +1,7 @@
 from django import forms
-from django.contrib.auth.models import Group
-
+from django_select2.forms import ModelSelect2MultipleWidget
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import Permission
 from .models import *
 
 class FormUsuario (forms.ModelForm):
@@ -20,6 +21,7 @@ class FormUsuario (forms.ModelForm):
             'rol'
         ]
 
+    
     def __init__ (self, *args, **kwargs):
         self.crear = kwargs.pop('crear', None)
         super (FormUsuario, self).__init__(*args, **kwargs)
@@ -117,6 +119,17 @@ class FormGrupos (forms.ModelForm):
             'permissions',
             'estado'
         ]
+
+        widgets = {
+            'permissions' : ModelSelect2MultipleWidget(
+                model = Permission,
+                search_fields = ['name__icontains'],
+                attrs = {
+                    'class': 'select2_demo_2 form-control',
+                    'multiple': 'multiple'
+                }
+            )
+        }
 
     def __init__ (self, *args, **kwargs):
         self.crear = kwargs.pop('crear', None)
