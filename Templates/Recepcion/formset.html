@@ -30,30 +30,32 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             {{ form.serial.errors.as_ul }}
                             {{ form.serial|as_crispy_field }} 
-                        </div>
-                        <div class="col-lg-4">
-                            {{ form.analisis.errors.as_ul }}
-                            {{ form.analisis|as_crispy_field }} 
-                        </div>
-                        <div class="col-lg-4">
+                        </div>                        
+                        <div class="col-lg-6">
                             {{ form.accesorio.errors.as_ul }}
                             {{ form.accesorio|as_crispy_field }} 
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             {{ form.capacidad.errors.as_ul }}
                             {{ form.capacidad|as_crispy_field }} 
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             {{ form.valvula.errors.as_ul }}
                             {{ form.valvula|as_crispy_field }} 
                         </div>
-                    </div>    
+                    </div>   
+                    <div class="row">
+                        <div class="col-lg-6">
+                            {{ form.analisis.errors.as_ul }}
+                            {{ form.analisis|as_crispy_field }} 
+                        </div>
+                    </div> 
                 </div>
             
                         

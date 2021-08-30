@@ -32,7 +32,7 @@
 <!-- Inicio Usuarios-->
 <li>
   <a href="#">
-    <i class="fa fa-user"></i>
+    <i class="fa fa-users"></i>
     <span class="nav-label">Usuarios</span>
     <span class="fa arrow"></span>
   </a>
@@ -92,3 +92,22 @@
 </li>
 
 <!-- Fin Clientes -->
+
+<!-- Inicio Recepción -->
+<li>
+  <a href="#">
+    <i class="fa fa-list-ul"></i>
+    <span class="nav-label">Recepción</span>
+    <span class="fa arrow"></span>
+  </a>
+  <ul class="nav nav-second-level collapse">
+    <li><a href="{% url 'Clientes:crear_clasificacion' %}"> Recibir items </a></li>
+  </ul>
+  <ul class="nav nav-second-level collapse">
+    <li><a href="{% url 'Clientes:crear' %}"> Listar recepciones </a></li>
+  </ul>
+  <ul class="nav nav-second-level collapse">
+    <li><a href="{% url 'Clientes:listar' %}"> Listar clientes </a></li>
+  </ul>
+</li>
+<!-- Firn Recepción -->
