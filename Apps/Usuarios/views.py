@@ -142,7 +142,7 @@ class EditarUsuario (UpdateView):
 class LoginUsuario(FormView):
     template_name = 'usuarios/login.html'
     form_class = LoginForm
-    success_url = reverse_lazy ('Usuarios:listar')
+    success_url = reverse_lazy ('usuarios:usuarios_crear')
 
     def form_valid(self, form):
         credentials = form.cleaned_data

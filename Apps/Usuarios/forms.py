@@ -1,9 +1,10 @@
 from django import forms
-from django.contrib.auth.models import Group
-
+from django_select2.forms import ModelSelect2MultipleWidget
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import Permission
 from .models import *
 
-class FormUsuario (forms.ModelForm):
+class FormUsuario (UserCreationForm):
     class Meta:
         model = Usuario
         fields = [
@@ -16,10 +17,12 @@ class FormUsuario (forms.ModelForm):
             'email',
             'telefono',
             'username',
-            'password',
+            'password1',
+            'password2',
             'rol'
         ]
 
+    
     def __init__ (self, *args, **kwargs):
         self.crear = kwargs.pop('crear', None)
         super (FormUsuario, self).__init__(*args, **kwargs)
@@ -57,7 +60,10 @@ class FormUsuario (forms.ModelForm):
         self.fields['username'].widget.attrs = {
             'class': 'form-control'
         }
-        self.fields['password'].widget.attrs = {
+        self.fields['password1'].widget.attrs = {
+            'class': 'form-control'
+        }
+        self.fields['password2'].widget.attrs = {
             'class': 'form-control'
         }
         self.fields['rol'].widget.attrs = {
@@ -107,6 +113,7 @@ class FormUsuario (forms.ModelForm):
             except Usuario.DoesNotExist:
                 pass 
 
+        return form_data
 
 
 class FormGrupos (forms.ModelForm):
@@ -117,6 +124,17 @@ class FormGrupos (forms.ModelForm):
             'permissions',
             'estado'
         ]
+
+        widgets = {
+            'permissions' : ModelSelect2MultipleWidget(
+                model = Permission,
+                search_fields = ['name__icontains'],
+                attrs = {
+                    'class': 'select2_demo_2 form-control',
+                    'multiple': 'multiple'
+                }
+            )
+        }
 
     def __init__ (self, *args, **kwargs):
         self.crear = kwargs.pop('crear', None)
@@ -151,6 +169,8 @@ class FormGrupos (forms.ModelForm):
                 self._errors['nombre'] = ['El rol ya existe']
             except Roles.DoesNotExist:
                 pass 
+
+        return form_data
 
 class LoginForm (forms.Form):
     username = forms.CharField(
