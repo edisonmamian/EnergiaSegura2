@@ -167,3 +167,18 @@ class DocumentosContablesInventarios (models.Model):
 
     def __str__(self) :
         return self.documentoContable
+
+class TiposIva (models.Model):
+    nombre = models.CharField(
+        max_length = 50,
+        null = False,
+        verbose_name = 'Tipo de IVA'
+    )
+    estado = models.ForeignKey (
+        Estado,
+        on_delete=models.CASCADE,
+        verbose_name='Estado'
+    )
+
+    def __str__(self):
+        return self.nombre

@@ -37,6 +37,8 @@ class FormTipoIdentificacion (forms.ModelForm):
             except TipoIdentificacion.DoesNotExist:
                 pass
 
+        return form_data
+
 class FormClasificacionDian (forms.ModelForm):
     class Meta:
         model = ClasificacionDian
@@ -72,6 +74,8 @@ class FormClasificacionDian (forms.ModelForm):
             except ClasificacionDian.DoesNotExist:
                 pass 
 
+        return form_data
+
 class FormTipoContribuyente (forms.ModelForm):
     class Meta:
         model = TipoContribuyente
@@ -106,6 +110,8 @@ class FormTipoContribuyente (forms.ModelForm):
                 self._errors['nombre'] = ['Tipo de contribuyente ya existe']
             except TipoContribuyente.DoesNotExist:
                 pass 
+
+        return form_data
 
 class FormActividadEconomica (forms.ModelForm):
     class Meta:
@@ -145,6 +151,8 @@ class FormActividadEconomica (forms.ModelForm):
                 self._errors['codigo'] = ['La actividad económica ya existe']
             except ActividadEconomica.DoesNotExist:
                 pass 
+        
+        return form_data
 
 class FormTiposResponsabilidades (forms.ModelForm):
     class Meta:
@@ -184,6 +192,8 @@ class FormTiposResponsabilidades (forms.ModelForm):
                 self._errors['codigo'] = ['La responsabilidad ya existe']
             except TiposResponsabilidades.DoesNotExist:
                 pass 
+        
+        return form_data
 
 class FormDocumentosContablesInventarios (forms.ModelForm):
     class Meta:
@@ -223,3 +233,42 @@ class FormDocumentosContablesInventarios (forms.ModelForm):
                 self._errors['abreviacion'] = ['El documento contable ya existe']
             except DocumentosContablesInventarios.DoesNotExist:
                 pass 
+        
+        return form_data
+
+class FormTipoIva (forms.ModelForm):
+    class Meta:
+        model = TiposIva
+        fields = [
+            'nombre',
+            'estado'
+        ]
+
+    def __init__(self, *args, **kwargs):
+        self.crear = kwargs.pop('crear', None)
+        super(FormTipoIva, self).__init__(*args, **kwargs)
+        self.fields['nombre'].widget.attrs = {
+            'class': 'form-control'
+        }
+        self.fields['estado'].widget.attrs = {
+            'class': 'form-control'
+        }
+
+    def clean (self):
+        form_data = super(FormTipoIva, self).clean()
+
+        if self.crear:
+            try:
+                clasificacion = TiposIva.objects.get(nombre = form_data['nombre'])
+                self._errors['nombre'] = ['El tipo de IVA ya existe']
+            except TiposIva.DoesNotExist:
+                pass
+        else:
+            try:
+                clasificacion = TiposIva.objects.exclude(nombre = self.instance)
+                clasificacion = clasificacion.get(nombre = form_data['nombre'])
+                self._errors['nombre'] = ['El tipo de IVA ya existe']
+            except TiposIva.DoesNotExist:
+                pass
+        
+        return form_data
