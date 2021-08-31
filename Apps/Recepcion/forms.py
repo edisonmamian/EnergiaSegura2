@@ -116,6 +116,8 @@ class FormRecepcion (forms.ModelForm):
     def clean (self):
         form_data = super(FormRecepcion, self).clean()
 
+        return form_data
+
 class FormItemRecibido (forms.ModelForm):
     class Meta:
         model = ItemRecibido
@@ -168,6 +170,8 @@ class FormItemRecibido (forms.ModelForm):
         if (accesorio == None or accesorio == '') and (valvula == None or valvula == ''):
             self._errors['accesorio'] = ["El campo accesorio o valvula deben estar diligenciados"]
             self._errors['valvula'] = ["El campo accesorio o valvula deben estar diligenciados"]
+
+        return form_data
 
 Formset_Recepcion_ItemRecibido = inlineformset_factory(
     Recepcion,
