@@ -44,19 +44,6 @@
 
             <div class="row">                
                 <div class="fieldWrapper col-lg-6">
-                    {{ form.valor_minimo.errors }}
-                    <label for="{{ form.valor_minimo.id_for_label }}">{{ form.valor_minimo.label }}: </label>
-                    {{ form.valor_minimo }}
-                </div>  
-                <div class="fieldWrapper col-lg-6">
-                    {{ form.valor_maximo.errors }}
-                    <label for="{{ form.valor_maximo.id_for_label }}">{{ form.valor_maximo.label }}: </label>
-                    {{ form.valor_maximo }}
-                </div>             
-            </div>
-
-            <div class="row">                
-                <div class="fieldWrapper col-lg-6">
                     {{ form.fase.errors }}
                     <label for="{{ form.fase.id_for_label }}">{{ form.fase.label }}: </label>
                     {{ form.fase }}
@@ -78,6 +65,32 @@
                     {{ form.tipoIva.errors }}
                     <label for="{{ form.tipoIva.id_for_label }}">{{ form.tipoIva.label }}: </label>
                     {{ form.tipoIva }}
+                </div>             
+            </div>
+
+            <div class="row">                
+                <div class="fieldWrapper col-lg-6">
+                    {{ form.frecuencia.errors }}
+                    <label for="{{ form.frecuencia.id_for_label }}">{{ form.frecuencia.label }}: </label>
+                    {{ form.frecuencia }}
+                </div>  
+                <div class="fieldWrapper col-lg-6">
+                    {{ form.opcionesAlternativas.errors }}
+                    <label for="{{ form.opcionesAlternativas.id_for_label }}">{{ form.opcionesAlternativas.label }}: </label>
+                    {{ form.opcionesAlternativas }}
+                </div>             
+            </div>
+
+            <div class="row" id="valores">                
+                <div class="fieldWrapper col-lg-6">
+                    {{ form.valor_minimo.errors }}
+                    <label for="{{ form.valor_minimo.id_for_label }}">{{ form.valor_minimo.label }}: </label>
+                    {{ form.valor_minimo }}
+                </div>  
+                <div class="fieldWrapper col-lg-6">
+                    {{ form.valor_maximo.errors }}
+                    <label for="{{ form.valor_maximo.id_for_label }}">{{ form.valor_maximo.label }}: </label>
+                    {{ form.valor_maximo }}
                 </div>             
             </div>
 
@@ -175,5 +188,25 @@
             $(".select2_demo_2").djangoSelect2();
 
         });
+    </script>
+
+    <script>
+        (function(){
+            if (document.getElementById("id_opcionesAlternativas").checked){
+                document.getElementById('valores').style.display = 'none'; 
+            }else{
+                document.getElementById('valores').style.display = 'block';
+            }
+        })();
+
+        (function(){
+            document.getElementById("id_opcionesAlternativas").onchange = function(){
+                if(document.getElementById("id_opcionesAlternativas").checked){
+                    document.getElementById('valores').style.display = 'none';
+                }else{
+                    document.getElementById('valores').style.display = 'block';
+                }
+            }
+        })();
     </script>
 {% endblock%}

@@ -49,6 +49,8 @@ class FormFases (forms.ModelForm):
                 self._errors['nombre'] = ["La fase ya existe"]
             except Fases.DoesNotExist:
                 pass
+        
+        return form_data
 
 class FormAnalisis (forms.ModelForm):
     class Meta:
@@ -63,7 +65,9 @@ class FormAnalisis (forms.ModelForm):
             'fase',
             'iva',
             'tipoIva',
-            'precio'
+            'precio',
+            'frecuencia',
+            'opcionesAlternativas'
         ]
 
     def __init__(self, *args, **kwargs):
@@ -107,6 +111,12 @@ class FormAnalisis (forms.ModelForm):
             'type':'number',
             'min':'0.00',
         }
+        self.fields['frecuencia'].widget.attrs = {
+            'class': 'form-control',
+        }
+        self.fields['opcionesAlternativas'].widget.attrs = {
+            'class': 'form-control',
+        }
 
     def clean (self):        
         form_data = super(FormAnalisis, self).clean()
@@ -124,8 +134,18 @@ class FormAnalisis (forms.ModelForm):
             except Fases.DoesNotExist:
                 pass
 
-        if form_data['valor_minimo'] > form_data['valor_maximo']:
-            self._errors['valor_minimo'] = ["El valor mínimo debe ser menor al valor máximo"]
+        if not form_data['opcionesAlternativas']:
+            min_val = form_data['valor_minimo']
+            max_val = form_data['valor_maximo']
+            if  min_val != None and max_val != None:
+                if min_val > max_val:
+                    self._errors['valor_minimo'] = ["El valor mínimo debe ser menor al valor máximo"]
+                    self._errors['valor_maximo'] = ["El valor máximo debe ser superior al valor mínimo"]
+            else:
+                if min_val == None:                    
+                    self._errors['valor_minimo'] = ['El valor mínimo no puede estar vacío']
 
-        if form_data['valor_maximo'] < form_data['valor_minimo']:
-            self._errors['valor_maximo'] = ["El valor máximo debe ser superior al valor mínimo"]
+                if max_val == None:
+                    self._errors['valor_maximo'] = ["El valor máximo no puede estar vacío"]    
+
+        return form_data
