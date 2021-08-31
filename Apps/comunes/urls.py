@@ -14,5 +14,7 @@ urlpatterns = [
     path ('responsabilidadfiscal/crear/', CrearTiposResponsabilidades.as_view(), name = 'crear_responsabilidadfiscal'),
     path ('responsabilidadfiscal/editar/<int:pk>/', ActualizarTiposResponsabilidades.as_view(), name = 'editar_responsabilidadfiscal'),
     path ('documentoscontables/crear/', CrearDocumentoContableInventario.as_view(), name= 'crear_documentocontable'),
-    path ('documentoscontables/editar/<int:pk>/', ActualizarDocumentoContableInventario.as_view(), name='editar_documentocontable')
+    path ('documentoscontables/editar/<int:pk>/', ActualizarDocumentoContableInventario.as_view(), name='editar_documentocontable'),
+    path ('tiposiva/crear/', CrearTipoIVA.as_view(), name= 'crear_tiposiva'),
+    path ('tiposiva/editar/<int:pk>/', ActualizarTiposIVA.as_view(), name='editar_tiposiva')
 ]

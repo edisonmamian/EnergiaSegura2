@@ -77,7 +77,7 @@ class ActualizarTipoIdentificacion (UpdateView):
 class CrearClasificacionDian (CreateView):
     model = ClasificacionDian
     form_class = FormClasificacionDian
-    template_name = 'comunes/tipoIdentificacion.html'
+    template_name = 'comunes/clasificaciondian.html'
 
     def get_success_url(self):
         return reverse("comunes:crear_clasificaciondian")
@@ -418,3 +418,72 @@ class ActualizarDocumentoContableInventario (UpdateView):
         )
         return super(ActualizarDocumentoContableInventario, self).form_invalid(form)
 
+
+########### TIPOS DE IVA
+class CrearTipoIVA (CreateView):
+    model = TiposIva
+    form_class = FormTipoIva
+    template_name = 'comunes/tipoiva.html'
+
+    def get_success_url(self):
+        return reverse("comunes:crear_tiposiva")
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['crear'] = True
+        return kwargs
+
+    def get_context_data(self, **kwargs):
+        context = super(CrearTipoIVA, self).get_context_data(**kwargs)
+        context['boton']= "Registrar"
+        context['tipos']= TiposIva.objects.all()
+
+        return context
+
+    def form_valid (self, form):
+        messages.success (
+            self.request,
+            "Se ha registrado el tipo de IVA"
+        )
+        return super(CrearTipoIVA, self).form_valid(form)
+
+    def form_invalid (self, form):
+        messages.error (
+            self.request,
+            "Error al registrar el tipo de IVA, por favor revise los datos"
+        )
+        return super(CrearTipoIVA, self).form_invalid(form)
+
+class ActualizarTiposIVA (UpdateView):
+    model = TiposIva
+    form_class = FormTipoIva
+    template_name = 'comunes/tipoiva.html'
+
+    def get_success_url(self):
+        return reverse("comunes:crear_tiposiva")
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['crear'] = False
+        return kwargs
+
+    def get_context_data(self, **kwargs):
+        context = super(ActualizarTiposIVA, self).get_context_data(**kwargs)
+        context['boton']= "Actualizar"
+        context['tipos']= TiposIva.objects.all()
+
+        return context
+
+    def form_valid (self, form):
+        messages.success (
+            self.request,
+            "Se ha actualizado exitosamente el tipo de IVA"
+        )
+        return super(ActualizarTiposIVA, self).form_valid(form)
+
+    def form_invalid (self, form):
+        messages.error (
+            self.request,
+            "Error al actualizar el tipo de IVA, por favor revise los datos"
+        )
+        return super(ActualizarTiposIVA, self).form_invalid(form)
