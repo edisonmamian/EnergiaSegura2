@@ -55,6 +55,8 @@ class FormClasificacion (forms.ModelForm):
             except ClasificacionClientes.DoesNotExist:
                 pass
 
+        return form_data
+
 class FormCliente (forms.ModelForm):
     class Meta:
         model = Clientes
@@ -219,6 +221,8 @@ class FormCliente (forms.ModelForm):
 
         if form_data['plazo'] < 0:
             self._errors['plazo'] = ['El plazo de pago no puede se inferior a cero días']
+        
+        return form_data
 
 class FormSede (forms.ModelForm):
     class Meta:
@@ -334,6 +338,8 @@ class FormSede (forms.ModelForm):
                 self.__error ['nombre'] = ['La sede ya existe']
             except SedeCliente.DoesNotExist:
                 pass
+
+        return form_data
 
 FormSet_Clientes_Sedes = inlineformset_factory(
     Clientes,

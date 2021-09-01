@@ -107,3 +107,21 @@ class Analisis (models.Model):
 
     def __str__(self):
         return self.nombre
+
+class ValoresAlternativos (models.Model):
+    analiisis = models.ForeignKey(
+        Analisis,
+        on_delete=models.CASCADE,
+        verbose_name="Analisis al que pertenece",
+        null = False,
+        limit_choices_to={'estado': 1}
+    )
+    nombre = models.CharField(
+        max_length=50,
+        verbose_name="Nombre",
+        null = False
+    )
+    aprueba = models.BooleanField(
+        verbose_name="¿Con esta opción se aprueba el ánalisis?",
+        null = False
+    )

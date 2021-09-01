@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 {% load static %}
 
 {% block titulo %}
@@ -6,93 +7,14 @@
 {% endblock %}
 
 {% block extrahead %}
-  <link href="{% static 'css/plugins/select2/select2.min.css' %}" rel="stylesheet">
-  <link href="{% static 'css/plugins/select2/select2-bootstrap4.min.css' %}" rel="stylesheet">
+  
 {% endblock%}
 
 {% block contenido %}
     <div class="col-lg-6">
         <form  method="POST" class="form-horizontal form-bordered " data-parsley-validate="true"> {% csrf_token %}
             
-            {{ form.non_field_errors }}
-            <div class="row">
-                <div class="fieldWrapper col-lg-6">
-                    {{ form.nombre.errors }}
-                    <label for="{{ form.nombre.id_for_label }}">{{ form.nombre.label }}: </label>
-                    {{ form.nombre }}
-                </div>
-
-                <div class="fieldWrapper col-lg-6">
-                    {{ form.sigia.errors }}
-                    <label for="{{ form.sigia.id_for_label }}">{{ form.sigia.label }}: </label>
-                    {{ form.sigia }}
-                </div>
-            </div>
-
-            <div class="row">                
-                <div class="fieldWrapper col-lg-6">
-                    {{ form.estado.errors }}
-                    <label for="{{ form.estado.id_for_label }}">{{ form.estado.label }}: </label>
-                    {{ form.estado }}
-                </div>  
-                <div class="fieldWrapper col-lg-6">
-                    {{ form.unidad_medida.errors }}
-                    <label for="{{ form.unidad_medida.id_for_label }}">{{ form.unidad_medida.label }}: </label>
-                    {{ form.unidad_medida }}
-                </div>             
-            </div>
-
-            <div class="row">                
-                <div class="fieldWrapper col-lg-6">
-                    {{ form.fase.errors }}
-                    <label for="{{ form.fase.id_for_label }}">{{ form.fase.label }}: </label>
-                    {{ form.fase }}
-                </div>  
-                <div class="fieldWrapper col-lg-6">
-                    {{ form.precio.errors }}
-                    <label for="{{ form.unidad_medida.id_for_label }}">{{ form.precio.label }}: </label>
-                    {{ form.precio }}
-                </div>             
-            </div>
-
-            <div class="row">                
-                <div class="fieldWrapper col-lg-6">
-                    {{ form.iva.errors }}
-                    <label for="{{ form.iva.id_for_label }}">{{ form.iva.label }}: </label>
-                    {{ form.iva }}
-                </div>  
-                <div class="fieldWrapper col-lg-6">
-                    {{ form.tipoIva.errors }}
-                    <label for="{{ form.tipoIva.id_for_label }}">{{ form.tipoIva.label }}: </label>
-                    {{ form.tipoIva }}
-                </div>             
-            </div>
-
-            <div class="row">                
-                <div class="fieldWrapper col-lg-6">
-                    {{ form.frecuencia.errors }}
-                    <label for="{{ form.frecuencia.id_for_label }}">{{ form.frecuencia.label }}: </label>
-                    {{ form.frecuencia }}
-                </div>  
-                <div class="fieldWrapper col-lg-6">
-                    {{ form.opcionesAlternativas.errors }}
-                    <label for="{{ form.opcionesAlternativas.id_for_label }}">{{ form.opcionesAlternativas.label }}: </label>
-                    {{ form.opcionesAlternativas }}
-                </div>             
-            </div>
-
-            <div class="row" id="valores">                
-                <div class="fieldWrapper col-lg-6">
-                    {{ form.valor_minimo.errors }}
-                    <label for="{{ form.valor_minimo.id_for_label }}">{{ form.valor_minimo.label }}: </label>
-                    {{ form.valor_minimo }}
-                </div>  
-                <div class="fieldWrapper col-lg-6">
-                    {{ form.valor_maximo.errors }}
-                    <label for="{{ form.valor_maximo.id_for_label }}">{{ form.valor_maximo.label }}: </label>
-                    {{ form.valor_maximo }}
-                </div>             
-            </div>
+            {% crispy form %}
 
             <div class="form-group">
                 <label class="control-label col-md-4 col-sm-4"></label>
@@ -173,38 +95,39 @@
 
         });
 
-    </script>
-
-    {{ form.media.js }}    
-    <script src="{% static 'js/plugins/select2/select2.full.min.js' %}"></script>
-
-    <script>
-        $(document).ready(function() {
-
-            $('.footable').footable();
-            $(".select2_demo_2").select2({
-                theme: 'bootstrap4',
-            });
-            $(".select2_demo_2").djangoSelect2();
-
-        });
-    </script>
+    </script>   
 
     <script>
         (function(){
             if (document.getElementById("id_opcionesAlternativas").checked){
-                document.getElementById('valores').style.display = 'none'; 
+                document.getElementById('div_id_unidad_medida').style.display = 'none'; 
+                document.getElementById('div_id_valor_minimo').style.display = 'none'; 
+                document.getElementById('div_id_valor_maximo').style.display = 'none'; 
+                document.getElementById('submit-id-submit').style.display = 'none';
+                document.getElementsByTagName('fieldset')[0].style.display = 'block';
             }else{
-                document.getElementById('valores').style.display = 'block';
+                document.getElementById('div_id_unidad_medida').style.display = 'block';
+                document.getElementById('div_id_valor_minimo').style.display = 'block';
+                document.getElementById('div_id_valor_maximo').style.display = 'block';
+                document.getElementById('submit-id-submit').style.display = 'none';
+                document.getElementsByTagName('fieldset')[0].style.display = 'none';
             }
         })();
 
         (function(){
             document.getElementById("id_opcionesAlternativas").onchange = function(){
                 if(document.getElementById("id_opcionesAlternativas").checked){
-                    document.getElementById('valores').style.display = 'none';
+                    document.getElementById('div_id_unidad_medida').style.display = 'none'; 
+                    document.getElementById('div_id_valor_minimo').style.display = 'none'; 
+                    document.getElementById('div_id_valor_maximo').style.display = 'none'; 
+                    document.getElementById('submit-id-submit').style.display = 'none';
+                    document.getElementsByTagName('fieldset')[0].style.display = 'block';
                 }else{
-                    document.getElementById('valores').style.display = 'block';
+                    document.getElementById('div_id_unidad_medida').style.display = 'block';
+                    document.getElementById('div_id_valor_minimo').style.display = 'block';
+                    document.getElementById('div_id_valor_maximo').style.display = 'block';
+                    document.getElementById('submit-id-submit').style.display = 'none';
+                    document.getElementsByTagName('fieldset')[0].style.display = 'none';
                 }
             }
         })();

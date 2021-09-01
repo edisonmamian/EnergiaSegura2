@@ -93,7 +93,7 @@ class CrearAnalisis (CreateView):
     template_name = 'Anaslisis/analisis.html'
 
     def get_success_url(self):
-        return reverse("Analisis:crear_fase")
+        return reverse("Analisis:crear")
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -105,7 +105,42 @@ class CrearAnalisis (CreateView):
         context['boton']= "Registrar"
         context['tipos']= Analisis.objects.all()
 
+        if self.request.POST:
+            context['valalt'] = FormSet_Analisis_ValAlter (
+                self.request.POST
+            )
+        else:
+            context['valalt'] = FormSet_Analisis_ValAlter ()
+
         return context
+
+    def form_valid (self, form):
+        context = self.get_context_data()
+        valalt = context['valalt']
+
+        if valalt.is_valid():
+            self.object = form.save()
+            valalt.instance = self.object
+            valalt.save()
+        else:
+            messages.error (
+                self.request,
+                "Error al registrar el analisis, por favor revise los datos"
+            )
+            return super(CrearAnalisis, self).form_invalid(form)
+        messages.success(
+            self.request,
+            "Se ha registrado exitosamente el analisis"
+        )
+        return super(CrearAnalisis, self).form_valid(form)
+       
+
+    def form_invalid (self, form):
+        messages.error (
+            self.request,
+            "Error al registrar el analisis, por favor revise los datos"
+        )
+        return super(CrearAnalisis, self).form_invalid(form)
 
 class ActualizarAnalisis (UpdateView):
     model = Analisis
@@ -113,7 +148,7 @@ class ActualizarAnalisis (UpdateView):
     template_name = 'Anaslisis/analisis.html'
 
     def get_success_url(self):
-        return reverse("Analisis:crear_fase")
+        return reverse("Analisis:crear")
 
     def dispatch(self, request, *args, **kwargs):
         try:
@@ -123,7 +158,7 @@ class ActualizarAnalisis (UpdateView):
                 self.request,
                 "El análisis al que intenta acceder no existe"
             )
-            return redirect("ObjEnsayo:crear")        
+            return redirect("Analisis:crear")        
         return super(ActualizarAnalisis, self).dispatch(request, *args, **kwargs)
 
     def get_form_kwargs(self):
@@ -137,3 +172,31 @@ class ActualizarAnalisis (UpdateView):
         context['tipos']= Analisis.objects.all()
 
         return context
+
+    def form_valid (self, form):
+        context = self.get_context_data()
+        valalt = context['valalt']
+
+        if valalt.is_valid():
+            self.object = form.save()
+            valalt.instance = self.object
+            valalt.save()
+        else:
+            messages.error (
+                self.request,
+                "Error al registrar el analisis, por favor revise los datos"
+            )
+            return super(ActualizarAnalisis, self).form_invalid(form)
+        messages.success(
+            self.request,
+            "Se ha actualizado exitosamente el analisis"
+        )
+        return super(ActualizarAnalisis, self).form_valid(form)
+       
+
+    def form_invalid (self, form):
+        messages.error (
+            self.request,
+            "Error al actualizar el analisis, por favor revise los datos"
+        )
+        return super(ActualizarAnalisis, self).form_invalid(form)

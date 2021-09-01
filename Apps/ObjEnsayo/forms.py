@@ -95,6 +95,8 @@ class FormTiposObjEnsayo (forms.ModelForm):
             except TiposObjEnsayo.DoesNotExist:
                 pass
 
+        return form_data
+
 class FormTipoObjEnsayo_Analisis (forms.ModelForm):
     class Meta:
         model = TiposObjEnsayo_Analisis
@@ -152,6 +154,8 @@ class FormTipoObjEnsayo_Analisis (forms.ModelForm):
         if form_data['min_aceptado'] > form_data['max_aceptado']:
             self._errors['min_aceptado'] = ["Este valor debe ser inferior al Valor máximo aceptado"]
             self._errors['max_aceptado'] = ["Este valor debe ser superior al Valor mínimo aceptado"]
+
+        return form_data
 
 FormSet_ObjEnsayo_Analisis = inlineformset_factory(
     TiposObjEnsayo,
