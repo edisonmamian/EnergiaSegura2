@@ -7,8 +7,7 @@
 {% endblock %}
 
 {% block extrahead %}
-  <link href="{% static 'css/plugins/select2/select2.min.css' %}" rel="stylesheet">
-  <link href="{% static 'css/plugins/select2/select2-bootstrap4.min.css' %}" rel="stylesheet">
+  
 {% endblock%}
 
 {% block contenido %}
@@ -96,38 +95,39 @@
 
         });
 
-    </script>
-
-    {{ form.media.js }}    
-    <script src="{% static 'js/plugins/select2/select2.full.min.js' %}"></script>
-
-    <script>
-        $(document).ready(function() {
-
-            $('.footable').footable();
-            $(".select2_demo_2").select2({
-                theme: 'bootstrap4',
-            });
-            $(".select2_demo_2").djangoSelect2();
-
-        });
-    </script>
+    </script>   
 
     <script>
         (function(){
             if (document.getElementById("id_opcionesAlternativas").checked){
-                document.getElementById('valores').style.display = 'none'; 
+                document.getElementById('div_id_unidad_medida').style.display = 'none'; 
+                document.getElementById('div_id_valor_minimo').style.display = 'none'; 
+                document.getElementById('div_id_valor_maximo').style.display = 'none'; 
+                document.getElementById('submit-id-submit').style.display = 'none';
+                document.getElementsByTagName('fieldset')[0].style.display = 'block';
             }else{
-                document.getElementById('valores').style.display = 'inline-block';
+                document.getElementById('div_id_unidad_medida').style.display = 'block';
+                document.getElementById('div_id_valor_minimo').style.display = 'block';
+                document.getElementById('div_id_valor_maximo').style.display = 'block';
+                document.getElementById('submit-id-submit').style.display = 'none';
+                document.getElementsByTagName('fieldset')[0].style.display = 'none';
             }
         })();
 
         (function(){
             document.getElementById("id_opcionesAlternativas").onchange = function(){
                 if(document.getElementById("id_opcionesAlternativas").checked){
-                    document.getElementById('valores').style.display = 'none';
+                    document.getElementById('div_id_unidad_medida').style.display = 'none'; 
+                    document.getElementById('div_id_valor_minimo').style.display = 'none'; 
+                    document.getElementById('div_id_valor_maximo').style.display = 'none'; 
+                    document.getElementById('submit-id-submit').style.display = 'none';
+                    document.getElementsByTagName('fieldset')[0].style.display = 'block';
                 }else{
-                    document.getElementById('valores').style.display = 'block';
+                    document.getElementById('div_id_unidad_medida').style.display = 'block';
+                    document.getElementById('div_id_valor_minimo').style.display = 'block';
+                    document.getElementById('div_id_valor_maximo').style.display = 'block';
+                    document.getElementById('submit-id-submit').style.display = 'none';
+                    document.getElementsByTagName('fieldset')[0].style.display = 'none';
                 }
             }
         })();

@@ -1,9 +1,6 @@
 {% load crispy_forms_tags %}
 {% load static %}
 
-<link href="{% static 'css/plugins/select2/select2.min.css' %}" rel="stylesheet">
-<link href="{% static 'css/plugins/select2/select2-bootstrap4.min.css' %}" rel="stylesheet">
-
     {{ formset.management_form|crispy }}
 
     {% for form in formset.forms %}
@@ -40,19 +37,7 @@
 
 <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
 <script src="{% static 'js/jquery.formset.js' %}"></script>
-{{ form.media.js }}  
-<script src="{% static 'js/plugins/select2/select2.full.min.js' %}"></script>
 
-<script>
-    $(document).ready(function() {
-
-        $(".select2_demo_2").select2({
-            theme: 'bootstrap4',
-        });
-        $(".select2_demo_2").djangoSelect2();
-
-    });
-</script>
 <script type="text/javascript">
     $('.formset_row-{{ formset.prefix }}').formset({
         addText: 'Agregar otro',
