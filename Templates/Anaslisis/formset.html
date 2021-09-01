@@ -1,0 +1,67 @@
+{% load crispy_forms_tags %}
+{% load static %}
+
+<link href="{% static 'css/plugins/select2/select2.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/plugins/select2/select2-bootstrap4.min.css' %}" rel="stylesheet">
+
+    {{ formset.management_form|crispy }}
+
+    {% for form in formset.forms %}
+        <div class="{% cycle 'row1' 'row2' %} formset_row-{{ formset.prefix }}" id="formset_row-{{ formset.prefix }}">   
+                
+            
+                <div class="borde">
+                    {# Include the hidden fields in the form #}
+                    {% if forloop.first %}
+                        {% for hidden in form.hidden_fields %}
+                            {{ hidden }}
+                        {% endfor %}
+                    {% endif %}
+                    
+                    <div class="row">
+                        <div class="col-lg-6">
+                            {{ form.nombre.errors.as_ul }}
+                            {{ form.nombre|as_crispy_field }} 
+                        </div>
+                        <div class="col-lg-6">
+                            {{ form.aprueba.errors.as_ul }}
+                            {{ form.aprueba|as_crispy_field }} 
+                        </div>
+                    </div>
+
+                </div>
+            
+                        
+        </div>
+    {% endfor %}
+
+
+<br>
+
+<script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+<script src="{% static 'js/jquery.formset.js' %}"></script>
+{{ form.media.js }}  
+<script src="{% static 'js/plugins/select2/select2.full.min.js' %}"></script>
+
+<script>
+    $(document).ready(function() {
+
+        $(".select2_demo_2").select2({
+            theme: 'bootstrap4',
+        });
+        $(".select2_demo_2").djangoSelect2();
+
+    });
+</script>
+<script type="text/javascript">
+    $('.formset_row-{{ formset.prefix }}').formset({
+        addText: 'Agregar otro',
+        deleteText: 'Quitar',
+        prefix: '{{ formset.prefix }}',
+        added: function($row) {
+            $('#id_allowance-'+$row[0].rowIndex+'-accounts').select2({ width:'resolve'});
+        }
+    });
+    
+</script>
+
