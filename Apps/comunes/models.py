@@ -182,3 +182,11 @@ class TiposIva (models.Model):
 
     def __str__(self):
         return self.nombre
+
+class EstadoProceso (models.Model):
+    nombre = models.CharField(
+        max_length = 50,
+        null = False,
+        verbose_name = "Estado del item"
+    )
+    
