@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'Apps.Analisis',
     'Apps.Clientes',
     'Apps.Recepcion',
-    'Apps.comunes'
+    'Apps.comunes',
+    'Apps.Proceso'
 ]
 
 MIDDLEWARE = [
