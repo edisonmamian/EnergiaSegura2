@@ -10,11 +10,11 @@ from Apps.Recepcion.models import Recepcion, ItemRecibido
 
 # Create your views here.
 class Proceso (CreateView):
-   model = Proceso 
-   form_class = FormProceso
-   template_name = 'Proceso/registrar.html'
+    model = Proceso 
+    form_class = FormProceso
+    template_name = 'Proceso/registrar.html'
 
-   def dispatch(self, *args, **kwargs):
+    def dispatch(self, *args, **kwargs):
         try:
             ItemRecibido.objects.get(id = self.kwargs['pk'])
         except ItemRecibido.DoesNotExist:
@@ -22,7 +22,7 @@ class Proceso (CreateView):
             return redirect('Proceso:items')
         return super(Proceso, self).dispatch(*args, **kwargs)
 
-   def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs):
         context = super(Proceso, self).get_context_data(**kwargs)		
         
         itemRecibido = ItemRecibido.objects.get(id=self.kwargs['pk'])
@@ -31,6 +31,19 @@ class Proceso (CreateView):
         context['itemRecibido'] = itemRecibido
         context['numero_criterios'] = analisis
         return context
+
+    def post(self, request, *argas, **kwargs):
+        itemRecibido = ItemRecibido.objects.get(id=self.kwargs['pk'])
+        analisis = itemRecibido.item.all()
+        resultados_unicode = request.POST.dict()
+
+        resultados = dict([(str(k), str(v)) for k, v in resultados_unicode.items()])
+
+        for i in analisis:
+            res = Proceso()
+
+        return redirect('Proceso:items')
+
 
 class ListarRecepciones (ListView):
     model = Recepcion
