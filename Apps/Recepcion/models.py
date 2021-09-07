@@ -1,4 +1,6 @@
 
+from Apps.comunes.models import EstadoProceso
+from Apps.ObjEnsayo.models import TiposObjEnsayo
 from django.db import models
 
 from Apps.Clientes.models import Clientes, SedeCliente
@@ -46,12 +48,24 @@ class Recepcion(models.Model):
         limit_choices_to={'is_active': True},
         verbose_name='Colaborador que recibe'
     )
+    estadoProceo = models.ForeignKey(
+        EstadoProceso,
+        on_delete=models.CASCADE,
+        verbose_name="Estado en el proceso"
+    )
 
 class ItemRecibido (models.Model):
     recepcion = models.ForeignKey (
         Recepcion,
         on_delete=models.CASCADE,
-        verbose_name='Recepcion'
+        verbose_name='Recepcion',
+        related_name="item"
+    )
+    tipoObjEnsayo = models.ForeignKey(
+        TiposObjEnsayo,
+        on_delete=models.CASCADE,
+        verbose_name="Tipo de item de ensayo"
+
     )
     gas = models.CharField(
         max_length=50,
